@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ApplyReady — Verifying your account</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Syne', sans-serif;
+      background: #f9f9f7;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; padding: 24px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1.5px solid #e8e8e4;
+      border-radius: 18px;
+      padding: 48px 40px;
+      max-width: 440px; width: 100%;
+      text-align: center;
+      box-shadow: 0 4px 32px rgba(0,0,0,.07);
+    }
+
+    .logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px; color: #0a0a09;
+      letter-spacing: -.01em; margin-bottom: 32px;
+      display: block;
+    }
+    .logo span { font-style: italic; color: #9a9a92; }
+
+    .icon {
+      width: 64px; height: 64px; border-radius: 16px;
+      margin: 0 auto 24px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+    }
+    .icon.loading { background: #e8f5ec; animation: pulse 1.5s ease-in-out infinite; }
+    .icon.success { background: #e8f5ec; }
+    .icon.error   { background: #fde8e7; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: .6; }
+    }
+
+    h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 26px; letter-spacing: -.02em;
+      color: #0a0a09; margin-bottom: 10px; line-height: 1.2;
+    }
+
+    p {
+      font-size: 14px; color: #6b6b64;
+      line-height: 1.65; margin-bottom: 0;
+    }
+
+    .mono {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px; letter-spacing: .06em;
+      text-transform: uppercase; color: #aaa;
+      margin-top: 28px; display: block;
+    }
+
+    .steps {
+      margin-top: 24px; text-align: left;
+      background: #f9f9f7; border: 1px solid #e8e8e4;
+      border-radius: 10px; padding: 16px 18px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .step-row {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 13px; color: #3a3a36;
+    }
+    .step-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #c3e6ce; flex-shrink: 0;
+    }
+    .step-dot.done { background: #1a6b35; }
+    .step-dot.active { background: #1a6b35; animation: pulse 1s infinite; }
+
+    .btn {
+      display: inline-block; margin-top: 24px;
+      background: #1a6b35; color: #fff;
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+      padding: 11px 24px; border-radius: 8px;
+      text-decoration: none; letter-spacing: .01em;
+      transition: background .15s;
+    }
+    .btn:hover { background: #158030; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="logo">Apply<span>Ready</span></span>
+
+    <div class="icon loading" id="icon">⏳</div>
+    <h1 id="title">Verifying your account</h1>
+    <p id="message">Hang tight — we're confirming your email and activating the extension.</p>
+
+    <div class="steps" id="steps">
+      <div class="step-row">
+        <div class="step-dot done"></div>
+        <span>Email link clicked</span>
+      </div>
+      <div class="step-row">
+        <div class="step-dot active" id="dot2"></div>
+        <span id="step2">Reading verification token</span>
+      </div>
+      <div class="step-row">
+        <div class="step-dot" id="dot3"></div>
+        <span id="step3">Activating extension</span>
+      </div>
+    </div>
+
+    <span class="mono" id="status">Working...</span>
+  </div>
+
+  <script>
+    // ── READ TOKEN FROM URL ──────────────────────────────────────────
+    // Supabase magic links put the session in the URL hash
+    // Format: #access_token=xxx&refresh_token=xxx&type=magiclink
+    function getParams() {
+      const hash = window.location.hash.substring(1);
+      const query = window.location.search.substring(1);
+      const params = new URLSearchParams(hash || query);
+      return {
+        accessToken:  params.get('access_token'),
+        refreshToken: params.get('refresh_token'),
+        type:         params.get('type'),
+        error:        params.get('error'),
+        errorDesc:    params.get('error_description'),
+      };
+    }
+
+    function setStep2Done() {
+      document.getElementById('dot2').classList.remove('active');
+      document.getElementById('dot2').classList.add('done');
+      document.getElementById('dot3').classList.add('active');
+      document.getElementById('step3').textContent = 'Sending to extension...';
+    }
+
+    function showSuccess() {
+      document.getElementById('dot3').classList.remove('active');
+      document.getElementById('dot3').classList.add('done');
+      document.getElementById('icon').textContent = '✓';
+      document.getElementById('icon').classList.remove('loading');
+      document.getElementById('icon').classList.add('success');
+      document.getElementById('title').textContent = 'You\'re verified!';
+      document.getElementById('message').textContent = 'Your ApplyReady extension is now active. You can close this tab and start analyzing jobs.';
+      document.getElementById('status').textContent = 'Extension activated · Close this tab';
+      document.getElementById('steps').remove();
+    }
+
+    function showError(msg) {
+      document.getElementById('icon').textContent = '✕';
+      document.getElementById('icon').classList.remove('loading');
+      document.getElementById('icon').classList.add('error');
+      document.getElementById('title').textContent = 'Something went wrong';
+      document.getElementById('message').innerHTML = msg + '<br><br>Try clicking the link in your email again, or re-enter your email in the extension settings.';
+      document.getElementById('status').textContent = 'Verification failed';
+      document.getElementById('steps').remove();
+    }
+
+    // ── SEND TOKEN TO EXTENSION ──────────────────────────────────────
+    // Uses chrome.runtime.sendMessage to talk to the extension
+    // The extension ID must match — we read it from the URL param
+    // URL format: /callback?ext=EXTENSION_ID#access_token=...
+    function sendToExtension(accessToken, refreshToken) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const extId = urlParams.get('ext');
+
+      if (!extId) {
+        // No extension ID — show manual fallback
+        showSuccess();
+        document.getElementById('message').textContent =
+          'Verified! If the extension didn\'t activate automatically, close and reopen it.';
+        return;
+      }
+
+      try {
+        chrome.runtime.sendMessage(
+          extId,
+          { type: 'APPLYREADY_AUTH', accessToken, refreshToken },
+          (response) => {
+            if (chrome.runtime.lastError) {
+              // Extension couldn't receive — show success anyway
+              // (user may need to reopen extension)
+              showSuccess();
+              return;
+            }
+            if (response?.success) {
+              showSuccess();
+            } else {
+              showError('Extension couldn\'t be reached. Try reopening it.');
+            }
+          }
+        );
+      } catch {
+        // chrome.runtime not available (non-Chrome browser)
+        showSuccess();
+      }
+    }
+
+    // ── MAIN ────────────────────────────────────────────────────────
+    (function init() {
+      const { accessToken, refreshToken, error, errorDesc } = getParams();
+
+      if (error) {
+        showError(errorDesc || error);
+        return;
+      }
+
+      if (!accessToken) {
+        showError('No verification token found in this URL.');
+        return;
+      }
+
+      document.getElementById('status').textContent = 'Token found · Activating...';
+      setStep2Done();
+
+      // Small delay so user sees the steps animate
+      setTimeout(() => {
+        sendToExtension(accessToken, refreshToken);
+      }, 800);
+    })();
+  </script>
+</body>
+</html>
