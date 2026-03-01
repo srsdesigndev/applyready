@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ApplyReady — Know if you should apply before you apply</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ── NAVIGATION ── -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">Apply<span>Ready</span></a>
+
+      <ul class="nav-links">
+        <li><a href="#problem">Why it exists</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#outreach">Outreach</a></li>
+        <li><a href="#testimonials">Stories</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <span class="nav-badge">Chrome Extension · Free</span>
+        <a href="#install" class="nav-cta">Add to Chrome</a>
+      </div>
+
+      <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div class="nav-mobile" id="mobileMenu">
+      <a href="#problem">Why it exists</a>
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#outreach">Outreach</a>
+      <a href="#testimonials">Stories</a>
+      <a href="#install" class="mobile-cta">Add to Chrome — Free</a>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero" id="hero">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-eyebrow">
+          <span class="eyebrow-dot"></span>
+          Built for international students
+        </div>
+        <h1 class="hero-h1">
+          Know if you should apply
+          <em>before you apply.</em>
+        </h1>
+        <p class="hero-sub">
+          Apply Ready reads any job listing in seconds — flags visa conflicts, sponsorship walls, and location mismatches, then drafts your outreach. Works on every job board.
+        </p>
+        <div class="hero-actions">
+          <a href="#install" class="btn-primary">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v8M5 6l3 3 3-3M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Add to Chrome — Free
+          </a>
+          <a href="#how" class="btn-ghost">See how it works →</a>
+        </div>
+        <div class="hero-trust">
+          <span>✓ No account needed</span>
+          <span>✓ No data stored</span>
+          <span>✓ Works in 30 seconds</span>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="mock-panel">
+          <div class="mock-head">
+            <div class="mock-wordmark">Apply<span>Ready</span></div>
+            <div class="mock-btns">
+              <div class="mock-btn">Settings</div>
+              <div class="mock-btn close">✕</div>
+            </div>
+          </div>
+          <div class="mock-body">
+            <button class="mock-analyze">Analyze this position</button>
+            <div class="mock-source">from job listing</div>
+
+            <div class="mock-verdict-card">
+              <div class="mock-vrow">
+                <span class="mock-verdict apply">APPLY</span>
+                <span class="mock-conf strong">STRONG</span>
+              </div>
+              <p class="mock-summary">Strong technical match. OPT-eligible, local hire advantage. Role explicitly open to new grads.</p>
+            </div>
+
+            <div class="mock-bullets-card">
+              <div class="mock-bhead green">
+                <span class="mock-bdot green"></span>
+                <span>Why apply</span>
+              </div>
+              <div class="mock-bbody">
+                <div class="mock-bullet"><span class="mock-bar green"></span>Direct MySQL + Python match</div>
+                <div class="mock-bullet"><span class="mock-bar green"></span>No clearance requirement</div>
+              </div>
+            </div>
+
+            <div class="mock-bullets-card">
+              <div class="mock-bhead red">
+                <span class="mock-bdot red"></span>
+                <span>Red flags</span>
+              </div>
+              <div class="mock-bbody">
+                <div class="mock-bullet"><span class="mock-bar red"></span>Onsite only — confirm relocation</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- floating verdict cards -->
+        <div class="float-card fc-skip">
+          <span class="fc-label skip">SKIP</span>
+          <span class="fc-text">Requires US Citizenship</span>
+        </div>
+        <div class="float-card fc-maybe">
+          <span class="fc-label maybe">MAYBE</span>
+          <span class="fc-text">H-1B not confirmed</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TICKER ── -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <div class="ticker-track" id="tickerTrack">
+        <span class="tick"><b class="apply">APPLY</b> Database Admin · OPT eligible · Strong match</span>
+        <span class="tick-sep">·</span>
+        <span class="tick"><b class="skip">SKIP</b> Requires US Citizenship · Security clearance</span>
+        <span class="tick-sep">·</span>
+        <span class="tick"><b class="maybe">MAYBE</b> H-1B sponsorship not confirmed · Ask recruiter</span>
+        <span class="tick-sep">·</span>
+        <span class="tick"><b class="apply">APPLY</b> Remote-first · No sponsor wall detected</span>
+        <span class="tick-sep">·</span>
+        <span class="tick"><b class="skip">SKIP</b> 5+ years required · New grad mismatch</span>
+        <span class="tick-sep">·</span>
+        <span class="tick"><b class="apply">APPLY</b> Local hire preferred · STEM OPT eligible</span>
+        <span class="tick-sep">·</span>
+        <span class="tick"><b class="skip">SKIP</b> Must be authorized without sponsorship</span>
+        <span class="tick-sep">·</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PROBLEM ── -->
+  <section class="section problem-section" id="problem">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="eyebrow">The problem</div>
+        <h2 class="section-h2">Job hunting as an international student <em>is a different game.</em></h2>
+        <p class="section-sub">You spend hours on listings only to find out on page three they don't sponsor. Or "must be authorized" means no OPT. You deserve a tool built for you.</p>
+      </div>
+
+      <div class="pain-grid">
+        <div class="pain-card reveal">
+          <div class="pain-num">01</div>
+          <div class="pain-icon">⏱</div>
+          <h3>Hours wasted on unsponsored roles</h3>
+          <p>Sponsorship walls are buried at the bottom — or hidden in the portal after you spend 45 minutes filling out the application.</p>
+        </div>
+        <div class="pain-card reveal delay-1">
+          <div class="pain-num">02</div>
+          <div class="pain-icon">📍</div>
+          <h3>Location traps you don't catch</h3>
+          <p>"Hybrid" in San Francisco when you're in Ohio isn't hybrid. Onsite roles you can't relocate to, easy to miss when applying fast.</p>
+        </div>
+        <div class="pain-card reveal delay-2">
+          <div class="pain-num">03</div>
+          <div class="pain-icon">✉️</div>
+          <h3>Generic outreach that gets ignored</h3>
+          <p>Copy-pasted messages that sound like everyone else's. Recruiters can tell. You need outreach that sounds like you, specific and confident.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HOW IT WORKS ── -->
+  <section class="section how-section" id="how">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="eyebrow">How it works</div>
+        <h2 class="section-h2">Open a job. Click once. <em>Know immediately.</em></h2>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step reveal">
+          <div class="step-num">01</div>
+          <h3 class="step-title">Paste your resume once</h3>
+          <p class="step-desc">Open Settings in the panel and paste your background. Apply Ready remembers it across every session.</p>
+        </div>
+        <div class="step reveal delay-1">
+          <div class="step-num">02</div>
+          <h3 class="step-title">Open any job listing</h3>
+          <p class="step-desc">LinkedIn, Handshake, Indeed, Glassdoor, company careers pages — works everywhere. Or select any text on any page.</p>
+        </div>
+        <div class="step reveal delay-2">
+          <div class="step-num">03</div>
+          <h3 class="step-title">Click Analyze</h3>
+          <p class="step-desc">The floating button reads the posting, cross-references your profile and visa status, returns a verdict in seconds.</p>
+        </div>
+        <div class="step reveal delay-3">
+          <div class="step-num">04</div>
+          <h3 class="step-title">Draft your outreach</h3>
+          <p class="step-desc">Choose Email, LinkedIn, Handshake, or Cover Letter. Add the recruiter's name for a personalized message. Copy and send.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FEATURES ── -->
+  <section class="section features-section" id="features">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="eyebrow">Features</div>
+        <h2 class="section-h2">Everything you need. <em>Nothing you don't.</em></h2>
+      </div>
+
+      <div class="bento">
+        <div class="bento-card large reveal">
+          <div class="bento-icon">🛂</div>
+          <h3>Visa-aware analysis</h3>
+          <p>Set your status once — F-1, OPT, STEM OPT, CPT, needs H-1B. Every analysis flags conflicts specific to your authorization level.</p>
+          <div class="bento-tags">
+            <span>F-1</span><span>OPT</span><span>STEM OPT</span><span>CPT</span><span>H-1B</span>
+          </div>
+        </div>
+        <div class="bento-card large reveal delay-1">
+          <div class="bento-icon">⚡</div>
+          <h3>Works on every job board</h3>
+          <p>LinkedIn, Indeed, Handshake, Glassdoor, company career pages — if there's a job listing, ApplyReady can read it. No supported-sites list.</p>
+          <div class="bento-tags">
+            <span>Universal</span><span>Auto-detect</span><span>Selection mode</span>
+          </div>
+        </div>
+        <div class="bento-card small reveal">
+          <div class="bento-icon">📍</div>
+          <h3>Location matching</h3>
+          <p>Set your city once. Get flagged when a role is onsite-only somewhere you can't reach.</p>
+        </div>
+        <div class="bento-card small reveal delay-1">
+          <div class="bento-icon">🎯</div>
+          <h3>Blunt verdict</h3>
+          <p>APPLY / SKIP / MAYBE with confidence score, pros, red flags, and skill gaps. No hedging.</p>
+        </div>
+        <div class="bento-card small reveal delay-2">
+          <div class="bento-icon">✦</div>
+          <h3>Selection mode</h3>
+          <p>Select any text on any page — a floating button appears. Analyze anything, anywhere.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── OUTREACH ── -->
+  <section class="section outreach-section" id="outreach">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="eyebrow">Outreach</div>
+        <h2 class="section-h2">Four formats. <em>One click.</em></h2>
+        <p class="section-sub">Platform-aware messages — not templates. Each format follows the actual norms of where it's being sent.</p>
+      </div>
+
+      <div class="outreach-grid">
+        <div class="outreach-demo reveal">
+          <div class="out-tabs">
+            <button class="out-tab active" data-tab="cover">Cover Letter</button>
+            <button class="out-tab" data-tab="email">Email</button>
+            <button class="out-tab" data-tab="linkedin">LinkedIn</button>
+            <button class="out-tab" data-tab="handshake">Handshake</button>
+          </div>
+
+          <div class="out-card" id="tab-cover">
+            <div class="out-card-head">Cover letter · Jamie Farmer, HR Specialist</div>
+            <div class="out-card-body">
+              <p><strong>Dear Jamie,</strong></p>
+              <p>The Database Administrator role at Trumbull Industries caught my attention because of the direct ecommerce infrastructure work — designing systems that scale with real transaction volume, not just demo data.</p>
+              <p>My background maps closely to what you need. I've worked with MySQL, MongoDB, and Python across production environments at Haicam Technologies, managing databases handling 1,000+ concurrent users. I'm based locally in Youngstown and available to start immediately on OPT.</p>
+              <p>I'd welcome a conversation about how I can support Trumbull's data infrastructure.</p>
+              <p>Best regards,<br>Sundar Raj Sharma<br>(929) 753-3512<br>srsharma33@student.ysu.edu</p>
+            </div>
+            <div class="out-card-foot">
+              <button class="out-copy" onclick="copyText(this)">Copy to clipboard</button>
+            </div>
+          </div>
+
+          <div class="out-card hidden" id="tab-email">
+            <div class="out-card-head">Cold email · Jamie Farmer</div>
+            <div class="out-card-body">
+              <p><strong>Dear Jamie,</strong></p>
+              <p>I came across the Database Administrator opening at Trumbull Industries and wanted to reach out directly. The ecommerce infrastructure focus is exactly the kind of work I've been building toward.</p>
+              <p>I've worked with MySQL, MongoDB, and Python in production at Haicam Technologies and I'm completing my M.S. in CIS at YSU — locally in Youngstown. I'm on OPT and available to start immediately with no sponsorship complications.</p>
+              <p>Would you have 15 minutes this week to connect?</p>
+              <p>Best regards,<br>Sundar Raj Sharma<br>(929) 753-3512</p>
+            </div>
+            <div class="out-card-foot">
+              <button class="out-copy" onclick="copyText(this)">Copy to clipboard</button>
+            </div>
+          </div>
+
+          <div class="out-card hidden" id="tab-linkedin">
+            <div class="out-card-head">LinkedIn connection note · 2 sentences</div>
+            <div class="out-card-body">
+              <p>Hi Jamie, I'm a CIS grad student at YSU applying for the Database Administrator role at Trumbull Industries — my MySQL and Python background aligns closely with what you're looking for. Would love to connect and hear more about the team.</p>
+            </div>
+            <div class="out-card-foot">
+              <button class="out-copy" onclick="copyText(this)">Copy to clipboard</button>
+            </div>
+          </div>
+
+          <div class="out-card hidden" id="tab-handshake">
+            <div class="out-card-head">Handshake message · Mobile-readable</div>
+            <div class="out-card-body">
+              <p>Hi Jamie, I'm applying for the Database Administrator role and wanted to reach out directly. The ecommerce database work stands out — it's exactly the kind of production-scale challenge I've been focused on at Haicam Technologies. Happy to answer any questions about my background.</p>
+            </div>
+            <div class="out-card-foot">
+              <button class="out-copy" onclick="copyText(this)">Copy to clipboard</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="outreach-points reveal delay-1">
+          <div class="op">
+            <div class="op-num">01</div>
+            <div class="op-content">
+              <h4>No address blocks on platforms</h4>
+              <p>Platform submissions don't need company headers or your home address. ApplyReady knows the difference between a mailed letter and a Handshake message.</p>
+            </div>
+          </div>
+          <div class="op">
+            <div class="op-num">02</div>
+            <div class="op-content">
+              <h4>Personalized by recruiter name</h4>
+              <p>Add a recruiter's name before generating. The message uses their first name naturally, not "Dear Hiring Manager."</p>
+            </div>
+          </div>
+          <div class="op">
+            <div class="op-num">03</div>
+            <div class="op-content">
+              <h4>Right length for each format</h4>
+              <p>LinkedIn notes are 2–3 sentences. Cover letters are 3 tight paragraphs. Each format follows the actual platform norms.</p>
+            </div>
+          </div>
+          <div class="op">
+            <div class="op-num">04</div>
+            <div class="op-content">
+              <h4>No filler, no hedging</h4>
+              <p>No "I hope this email finds you well." Confident, specific prose that sounds like a real person wrote it.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATS ── -->
+  <div class="stats-band">
+    <div class="stats-inner">
+      <div class="stat reveal">
+        <div class="stat-num">12<span>s</span></div>
+        <div class="stat-label">Average time to verdict</div>
+      </div>
+      <div class="stat reveal delay-1">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Job boards supported</div>
+      </div>
+      <div class="stat reveal delay-2">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Outreach formats</div>
+      </div>
+      <div class="stat reveal delay-3">
+        <div class="stat-num">$0</div>
+        <div class="stat-label">Cost to use</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TESTIMONIALS ── -->
+  <section class="section testimonials-section" id="testimonials">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="eyebrow">From the community</div>
+        <h2 class="section-h2">Built by an international student, <em>for international students.</em></h2>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="tcard reveal">
+          <div class="tcard-body">"I used to spend 20 minutes reading every posting before finding the sponsorship wall at the very bottom. ApplyReady catches it in seconds."</div>
+          <div class="tcard-person">
+            <div class="tcard-avatar">AR</div>
+            <div>
+              <div class="tcard-name">Aditya R.</div>
+              <div class="tcard-meta">CS grad · F-1 OPT · YSU</div>
+            </div>
+          </div>
+        </div>
+        <div class="tcard reveal delay-1">
+          <div class="tcard-body">"The cover letter it generated was better than what I'd write in an hour. Specific, confident, no filler. The recruiter responded the same day."</div>
+          <div class="tcard-person">
+            <div class="tcard-avatar">PK</div>
+            <div>
+              <div class="tcard-name">Priya K.</div>
+              <div class="tcard-meta">MIS grad · STEM OPT · Ohio State</div>
+            </div>
+          </div>
+        </div>
+        <div class="tcard reveal delay-2">
+          <div class="tcard-body">"It flagged three roles I was about to apply to as onsite-only in SF. Saved me from three pointless phone screens and weeks of false hope."</div>
+          <div class="tcard-person">
+            <div class="tcard-avatar">MZ</div>
+            <div>
+              <div class="tcard-name">Mehmet Z.</div>
+              <div class="tcard-meta">Data Science · J-1 · Case Western</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <section class="cta-section" id="install">
+    <div class="cta-inner">
+      <div class="eyebrow center">Free · Chrome Extension · No account required</div>
+      <h2 class="cta-h2">Stop applying blind. <em>Start applying smart.</em></h2>
+      <p class="cta-sub">Install in 30 seconds. Paste your resume once. Get a verdict on every job you look at.</p>
+      <div class="cta-actions">
+        <a href="#" class="btn-primary large">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M8 1v8M5 6l3 3 3-3M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Add to Chrome — Free
+        </a>
+        <a href="#how" class="btn-outline">See how it works</a>
+      </div>
+      <div class="cta-checks">
+        <span>✓ No account</span>
+        <span>✓ No data stored</span>
+        <span>✓ Works immediately</span>
+        <span>✓ Every job board</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="footer-logo">Apply<span>Ready</span></div>
+        <div class="footer-tagline">Visa-aware job analysis for international students.</div>
+      </div>
+      <div class="footer-links">
+        <a href="#problem">Why it exists</a>
+        <a href="#how">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#install">Install</a>
+      </div>
+      <div class="footer-right">
+        <div class="footer-mono">BUILT AT YOUNGSTOWN STATE · 2026</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script/script.js"></script>
+</body>
+</html>
