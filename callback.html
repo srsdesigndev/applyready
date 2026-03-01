@@ -168,43 +168,36 @@
     }
 
     // ── SEND TOKEN TO EXTENSION ──────────────────────────────────────
-    // Uses chrome.runtime.sendMessage to talk to the extension
-    // The extension ID must match — we read it from the URL param
-    // URL format: /callback?ext=EXTENSION_ID#access_token=...
+    // Strategy: store in localStorage on this page.
+    // background.js polls all tabs on this domain and picks it up.
+    // Much more reliable than sendMessage when service worker is inactive.
     function sendToExtension(accessToken, refreshToken) {
+      // 1. Store token in localStorage for background.js to pick up
+      try {
+        localStorage.setItem('applyready_pending_token', JSON.stringify({
+          accessToken,
+          refreshToken,
+          timestamp: Date.now(),
+        }));
+      } catch (e) {
+        console.warn('localStorage write failed', e);
+      }
+
+      // 2. Also try direct sendMessage if ext ID in URL (works if SW is awake)
       const urlParams = new URLSearchParams(window.location.search);
       const extId = urlParams.get('ext');
-
-      if (!extId) {
-        // No extension ID — show manual fallback
-        showSuccess();
-        document.getElementById('message').textContent =
-          'Verified! If the extension didn\'t activate automatically, close and reopen it.';
-        return;
+      if (extId && typeof chrome !== 'undefined' && chrome.runtime) {
+        try {
+          chrome.runtime.sendMessage(
+            extId,
+            { type: 'APPLYREADY_AUTH', accessToken, refreshToken },
+            () => { /* ignore errors — localStorage is the reliable path */ }
+          );
+        } catch { /* ignore */ }
       }
 
-      try {
-        chrome.runtime.sendMessage(
-          extId,
-          { type: 'APPLYREADY_AUTH', accessToken, refreshToken },
-          (response) => {
-            if (chrome.runtime.lastError) {
-              // Extension couldn't receive — show success anyway
-              // (user may need to reopen extension)
-              showSuccess();
-              return;
-            }
-            if (response?.success) {
-              showSuccess();
-            } else {
-              showError('Extension couldn\'t be reached. Try reopening it.');
-            }
-          }
-        );
-      } catch {
-        // chrome.runtime not available (non-Chrome browser)
-        showSuccess();
-      }
+      // 3. Always show success — extension will pick up token on next open
+      showSuccess();
     }
 
     // ── MAIN ────────────────────────────────────────────────────────
