@@ -201,18 +201,20 @@
       startCountdown();
     }
 
-    // ── COUNTDOWN REDIRECT ──────────────────────────────────────────
+    // ── COUNTDOWN CLOSE ─────────────────────────────────────────────
     function startCountdown() {
       const statusEl = document.getElementById('status');
       let count = 5;
-      statusEl.textContent = `Redirecting in ${count}…`;
+      statusEl.textContent = `Closing in ${count}…`;
       const timer = setInterval(() => {
         count--;
         if (count > 0) {
-          statusEl.textContent = `Redirecting in ${count}…`;
+          statusEl.textContent = `Closing in ${count}…`;
         } else {
           clearInterval(timer);
-          window.location.href = 'https://srsdesigndev.github.io/applyready/';
+          window.close();
+          // Fallback if window.close() is blocked
+          statusEl.textContent = 'You can close this tab.';
         }
       }, 1000);
     }
