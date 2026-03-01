@@ -198,11 +198,33 @@
 
       // 3. Always show success — extension will pick up token on next open
       showSuccess();
+      startCountdown();
+    }
+
+    // ── COUNTDOWN REDIRECT ──────────────────────────────────────────
+    function startCountdown() {
+      const statusEl = document.getElementById('status');
+      let count = 5;
+      statusEl.textContent = `Redirecting in ${count}…`;
+      const timer = setInterval(() => {
+        count--;
+        if (count > 0) {
+          statusEl.textContent = `Redirecting in ${count}…`;
+        } else {
+          clearInterval(timer);
+          window.location.href = 'https://srsdesigndev.github.io/applyready/';
+        }
+      }, 1000);
     }
 
     // ── MAIN ────────────────────────────────────────────────────────
     (function init() {
       const { accessToken, refreshToken, error, errorDesc } = getParams();
+
+      // Immediately clean the token from the URL bar so it's not exposed
+      if (window.history.replaceState) {
+        window.history.replaceState(null, '', window.location.pathname);
+      }
 
       if (error) {
         showError(errorDesc || error);
