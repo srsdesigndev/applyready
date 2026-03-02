@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to Use — ApplyReady</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --g:        #06923E;
+      --g-light:  #edf7f1;
+      --g-mid:    #c2e0ce;
+      --black:    #0d0b12;
+      --ink:      #1c1729;
+      --ink-2:    #3b3557;
+      --ink-3:    #6e6a85;
+      --ink-4:    #9e9ab5;
+      --rule:     #e9e7f0;
+      --surface:  #faf9ff;
+      --white:    #ffffff;
+
+      --font-display: 'Instrument Serif', serif;
+      --font-ui:      'Syne', sans-serif;
+      --font-mono:    'DM Mono', monospace;
+
+      --sidebar-w: 240px;
+      --nav-h:     64px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    body {
+      background: var(--white);
+      color: var(--ink);
+      font-family: var(--font-ui);
+      font-size: 15px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ── TOP NAV ── */
+    .topnav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--nav-h);
+      background: rgba(255,255,255,.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1.5px solid var(--rule);
+      display: flex; align-items: center;
+      padding: 0 32px;
+      gap: 24px;
+    }
+
+    .topnav-logo {
+      display: flex; align-items: center;
+      font-family: var(--font-display);
+      font-size: 18px; color: var(--ink); letter-spacing: -.01em;
+    }
+    .topnav-logo svg { margin-right: 8px; }
+    .topnav-logo span { font-style: italic; color: var(--ink-3); }
+
+    .topnav-divider {
+      width: 1px; height: 20px;
+      background: var(--rule);
+    }
+
+    .topnav-section {
+      font-family: var(--font-mono);
+      font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--ink-4);
+    }
+
+    .topnav-right {
+      margin-left: auto;
+      display: flex; align-items: center; gap: 12px;
+    }
+
+    .topnav-back {
+      font-size: 13px; font-weight: 600; color: var(--ink-3);
+      display: flex; align-items: center; gap: 6px;
+      transition: color .15s;
+    }
+    .topnav-back:hover { color: var(--g); }
+
+    /* ── LAYOUT ── */
+    .docs-layout {
+      display: flex;
+      padding-top: var(--nav-h);
+      min-height: 100vh;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      position: sticky;
+      top: var(--nav-h);
+      height: calc(100vh - var(--nav-h));
+      overflow-y: auto;
+      border-right: 1.5px solid var(--rule);
+      padding: 32px 0;
+      background: var(--surface);
+    }
+
+    .sidebar-label {
+      font-family: var(--font-mono);
+      font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--ink-4);
+      padding: 0 24px;
+      margin-bottom: 10px;
+    }
+
+    .sidebar-nav { display: flex; flex-direction: column; }
+
+    .sidebar-link {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 24px;
+      font-size: 13.5px; font-weight: 600; color: var(--ink-3);
+      border-left: 2px solid transparent;
+      transition: all .12s;
+      cursor: pointer;
+    }
+    .sidebar-link:hover { color: var(--ink); background: var(--g-light); }
+    .sidebar-link.active {
+      color: var(--g);
+      border-left-color: var(--g);
+      background: var(--g-light);
+    }
+
+    .sidebar-step-num {
+      font-family: var(--font-mono);
+      font-size: 10px; font-weight: 500;
+      color: var(--g); background: var(--g-light);
+      border: 1px solid var(--g-mid);
+      width: 22px; height: 22px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .sidebar-link.active .sidebar-step-num {
+      background: var(--g); color: #fff; border-color: var(--g);
+    }
+
+    /* ── MAIN CONTENT ── */
+    .docs-main {
+      flex: 1;
+      padding: 56px 72px 96px;
+      max-width: 820px;
+    }
+
+    .docs-header {
+      margin-bottom: 56px;
+      padding-bottom: 40px;
+      border-bottom: 1.5px solid var(--rule);
+    }
+
+    .docs-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--g);
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 16px;
+    }
+    .docs-eyebrow::before {
+      content: ''; width: 16px; height: 1.5px; background: var(--g);
+    }
+
+    .docs-h1 {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 3.5vw, 48px);
+      line-height: 1.08; letter-spacing: -.03em;
+      color: var(--black); margin-bottom: 14px;
+    }
+    .docs-h1 em { font-style: italic; color: var(--g); }
+
+    .docs-intro {
+      font-size: 16px; color: var(--ink-3); line-height: 1.7;
+      max-width: 560px;
+    }
+
+    /* ── STEP BLOCK ── */
+    .step-block {
+      margin-bottom: 72px;
+      scroll-margin-top: calc(var(--nav-h) + 32px);
+    }
+
+    .step-header {
+      display: flex; align-items: flex-start; gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .step-badge {
+      font-family: var(--font-mono);
+      font-size: 11px; font-weight: 500; letter-spacing: .08em;
+      color: var(--g); background: var(--g-light);
+      border: 1.5px solid var(--g-mid);
+      padding: 4px 10px; border-radius: 20px;
+      white-space: nowrap; flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    .step-title-group h2 {
+      font-family: var(--font-ui);
+      font-size: 22px; font-weight: 800;
+      color: var(--black); margin-bottom: 6px;
+      letter-spacing: -.02em;
+    }
+
+    .step-title-group p {
+      font-size: 14.5px; color: var(--ink-3); line-height: 1.7;
+    }
+
+    /* ── SNAPSHOT ── */
+    .step-snapshot {
+      background: var(--surface);
+      border: 1.5px solid var(--rule);
+      border-radius: 14px;
+      overflow: hidden;
+      margin: 28px 0;
+      position: relative;
+    }
+
+    .snapshot-bar {
+      background: var(--white);
+      border-bottom: 1.5px solid var(--rule);
+      padding: 10px 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .snapshot-dots { display: flex; gap: 5px; }
+    .snapshot-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+    .snapshot-dot:nth-child(1) { background: #ff5f56; }
+    .snapshot-dot:nth-child(2) { background: #ffbd2e; }
+    .snapshot-dot:nth-child(3) { background: #27c93f; }
+
+    .snapshot-url {
+      flex: 1;
+      font-family: var(--font-mono); font-size: 11px; color: var(--ink-4);
+      background: var(--surface); border: 1px solid var(--rule);
+      border-radius: 6px; padding: 4px 10px;
+    }
+
+    .snapshot-img {
+      width: 100%; display: block;
+      min-height: 220px;
+      object-fit: cover; object-position: top;
+    }
+
+    .snapshot-caption {
+      padding: 10px 16px;
+      font-family: var(--font-mono); font-size: 10.5px;
+      color: var(--ink-4); letter-spacing: .04em;
+      border-top: 1.5px solid var(--rule);
+      background: var(--white);
+    }
+
+    /* ── CALLOUT BOXES ── */
+    .callout {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 16px 18px; border-radius: 10px;
+      margin: 20px 0;
+      font-size: 13.5px; line-height: 1.65;
+    }
+    .callout.tip {
+      background: var(--g-light);
+      border: 1.5px solid var(--g-mid);
+      color: #1a5c30;
+    }
+    .callout.note {
+      background: #f0f4ff;
+      border: 1.5px solid #d0d9ff;
+      color: #2a3580;
+    }
+    .callout-icon {
+      font-size: 16px; flex-shrink: 0; margin-top: 1px;
+    }
+    .callout strong {
+      font-weight: 700; display: block; margin-bottom: 3px;
+    }
+
+    /* ── DIVIDER ── */
+    .step-divider {
+      border: none;
+      border-top: 1.5px solid var(--rule);
+      margin-bottom: 72px;
+    }
+
+    /* ── DONE BLOCK ── */
+    .done-block {
+      background: var(--g);
+      border-radius: 14px;
+      padding: 40px 36px;
+      text-align: center;
+      margin-top: 56px;
+    }
+    .done-block h3 {
+      font-family: var(--font-display);
+      font-size: 28px; color: #fff;
+      letter-spacing: -.02em; margin-bottom: 10px;
+    }
+    .done-block p {
+      font-size: 14px; color: rgba(255,255,255,.7);
+      margin-bottom: 24px; line-height: 1.6;
+    }
+    .done-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #fff; color: var(--g);
+      font-family: var(--font-ui); font-size: 14px; font-weight: 700;
+      padding: 12px 24px; border-radius: 8px;
+      transition: background .15s;
+    }
+    .done-btn:hover { background: #f0f0ee; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .docs-main { padding: 40px 24px 72px; }
+      .topnav { padding: 0 20px; }
+      .topnav-section { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── TOP NAV ── -->
+  <nav class="topnav">
+    <a href="index.html" class="topnav-logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M2.06935 5.25839C2 5.62595 2 6.06722 2 6.94975V14C2 17.7712 2 19.6569 3.17157 20.8284C4.34315 22 6.22876 22 10 22H14C17.7712 22 19.6569 22 20.8284 20.8284C22 19.6569 22 17.7712 22 14V11.7979C22 9.16554 22 7.84935 21.2305 6.99383C21.1598 6.91514 21.0849 6.84024 21.0062 6.76946C20.1506 6 18.8345 6 16.2021 6H15.8284C14.6747 6 14.0979 6 13.5604 5.84678C13.2651 5.7626 12.9804 5.64471 12.7121 5.49543C12.2237 5.22367 11.8158 4.81578 11 4L10.4497 3.44975C10.1763 3.17633 10.0396 3.03961 9.89594 2.92051C9.27652 2.40704 8.51665 2.09229 7.71557 2.01738C7.52976 2 7.33642 2 6.94975 2C6.06722 2 5.62595 2 5.25839 2.06935C3.64031 2.37464 2.37464 3.64031 2.06935 5.25839ZM12.9524 11.1989L12.8541 11.0225C12.4741 10.3408 12.2841 10 12 10C11.7159 10 11.5259 10.3408 11.1459 11.0225L11.0476 11.1989C10.9397 11.3926 10.8857 11.4894 10.8015 11.5533C10.7173 11.6172 10.6125 11.641 10.4028 11.6884L10.2119 11.7316C9.47396 11.8986 9.10501 11.982 9.01723 12.2643C8.92945 12.5466 9.18097 12.8407 9.68403 13.429L9.81418 13.5812C9.95713 13.7483 10.0286 13.8319 10.0608 13.9353C10.0929 14.0387 10.0821 14.1502 10.0605 14.3733L10.0408 14.5763C9.96476 15.3612 9.92674 15.7536 10.1565 15.9281C10.3864 16.1025 10.7318 15.9435 11.4227 15.6254L11.6014 15.5431C11.7978 15.4527 11.8959 15.4075 12 15.4075C12.1041 15.4075 12.2022 15.4527 12.3986 15.5431L12.5773 15.6254C13.2682 15.9435 13.6136 16.1025 13.8435 15.9281C14.0733 15.7536 14.0352 15.3612 13.9592 14.5763L13.9395 14.3733C13.9179 14.1502 13.9071 14.0387 13.9392 13.9353C13.9714 13.8319 14.0429 13.7483 14.1858 13.5812L14.316 13.429C14.819 12.8407 15.0706 12.5466 14.9828 12.2643C14.895 11.982 14.526 11.8986 13.7881 11.7316L13.5972 11.6884C13.3875 11.641 13.2827 11.6172 13.1985 11.5533C13.1143 11.4894 13.0603 11.3926 12.9524 11.1989Z" fill="#06923E"/>
+      </svg>
+      Apply<span>Ready</span>
+    </a>
+    <div class="topnav-divider"></div>
+    <span class="topnav-section">Documentation</span>
+    <div class="topnav-right">
+      <a href="index.html" class="topnav-back">
+        ← Back to site
+      </a>
+    </div>
+  </nav>
+
+  <div class="docs-layout">
+
+    <!-- ── SIDEBAR ── -->
+    <aside class="sidebar">
+      <div class="sidebar-label">Getting started</div>
+      <nav class="sidebar-nav">
+        <a class="sidebar-link active" href="#step-1">
+          <span class="sidebar-step-num">1</span>
+          Install the extension
+        </a>
+        <a class="sidebar-link" href="#step-2">
+          <span class="sidebar-step-num">2</span>
+          Paste your resume
+        </a>
+        <a class="sidebar-link" href="#step-3">
+          <span class="sidebar-step-num">3</span>
+          Set your visa status
+        </a>
+        <a class="sidebar-link" href="#step-4">
+          <span class="sidebar-step-num">4</span>
+          Open a job listing
+        </a>
+        <a class="sidebar-link" href="#step-5">
+          <span class="sidebar-step-num">5</span>
+          Click Analyze
+        </a>
+        <a class="sidebar-link" href="#step-6">
+          <span class="sidebar-step-num">6</span>
+          Read your verdict
+        </a>
+        <a class="sidebar-link" href="#step-7">
+          <span class="sidebar-step-num">7</span>
+          Draft your outreach
+        </a>
+      </nav>
+    </aside>
+
+    <!-- ── MAIN ── -->
+    <main class="docs-main">
+
+      <div class="docs-header">
+        <div class="docs-eyebrow">Documentation</div>
+        <h1 class="docs-h1">How to use <em>ApplyReady</em></h1>
+        <p class="docs-intro">Seven steps to go from job listing to verdict and outreach — in under a minute. Follow this once and it becomes second nature.</p>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="step-block" id="step-1">
+        <div class="step-header">
+          <span class="step-badge">Step 01</span>
+          <div class="step-title-group">
+            <h2>Install the extension</h2>
+            <p>Head to the Chrome Web Store and add ApplyReady to your browser. It takes one click and requires no account or sign-up.</p>
+          </div>
+        </div>
+
+        <div class="step-snapshot">
+          <div class="snapshot-bar">
+            <div class="snapshot-dots">
+              <div class="snapshot-dot"></div>
+              <div class="snapshot-dot"></div>
+              <div class="snapshot-dot"></div>
+            </div>
+            <div class="snapshot-url">chromewebstore.google.com</div>
+          </div>
+          <img class="snapshot-img" src="assets/docs/step-1.png" alt="Chrome Web Store install screen" />
+          <div class="snapshot-caption">Chrome Web Store · ApplyReady install page</div>
+        </div>
+
+        <div class="callout tip">
+          <span class="callout-icon">✦</span>
+          <div><strong>After install</strong> Pin the extension to your toolbar so the panel is always one click away — click the puzzle icon in Chrome and pin ApplyReady.</div>
+        </div>
+      </div>
+
+      <hr class="step-divider" />
+
+      <!-- STEP 2 -->
+      <div class="step-block" id="step-2">
+        <div class="step-header">
+          <span class="step-badge">Step 02</span>
+          <div class="step-title-group">
+            <h2>Paste your resume</h2>
+            <p>Click the extension icon to open the panel, then open Settings. Paste your resume text — skills, experience, education. ApplyReady saves it and uses it for every analysis.</p>
+          </div>
+        </div>
+
+        <div class="step-snapshot">
+          <div class="snapshot-bar">
+            <div class="snapshot-dots">
+              <div class="snapshot-dot"></div>
+              <div class="snapshot-dot"></div>
+              <div class="snapshot-dot"></div>
+            </div>
+            <div class="snapshot-url">ApplyReady · Settings panel</div>
+          </div>
+          <img class="snapshot-img" src="assets/docs/step-2.png" alt="Paste resume in settings" />
+          <div class="snapshot-caption">Settings panel · Resume input field</div>
+        </div>
+
+        <div class="callout note">
+          <span class="callout-icon">ℹ</span>
+          <div><strong>Plain text only</strong> Copy your resume as plain text — no need to upload a file. Paste everything: skills, experience, education, and any relevant keywords.</div>
+        </div>
+      </div>
+
+      <hr class="step-divider" />
+
+      <!-- STEP 3 -->
+      <div class="step-block" id="step-3">
+        <div class="step-header">
+          <span class="step-badge">Step 03</span>
+          <div class="step-title-group">
+            <h2>Set your visa status</h2>
+            <p>In Settings, select your current authorization — F-1, OPT, STEM OPT, CPT, or needs H-1B. This is what makes every analysis specific to your situation.</p>
+          </div>
+        </div>
+
+        <div class="step-snapshot">
+          <div class="snapshot-bar">
+            <div class="snapshot-dots">
+              <div class="snapshot-dot"></div>
+              <div class="snapshot-dot"></div>
+              <div class="snapshot-dot"></div>
+            </div>
+            <div class="snapshot-url">ApplyReady · Settings panel</div>
+          </div>
+          <img class="snapshot-img" src="assets/docs/step-3.png" alt="Visa status selection" />
+          <div class="snapshot-caption">Settings panel · Visa status selector</div>
+        </div>
+
+        <div class="callout tip">
+          <span class="callout-icon">✦</span>
+          <div><strong>Also set your city</strong> Add your current location so ApplyReady can flag onsite-only roles that would require relocation.</div>
+        </div>
+      </div>
+
+      <hr class="step-divider" />
+
+      <!-- STEP 4 -->
+      <div class="step-block" id="step-4">
+        <div class="step-header">
+          <span class="step-badge">Step 04</span>
+          <div class="step-title-group">
+            <h2>Open any job listing</h2>
+            <p>Navigate to any job posting — LinkedIn, Indeed, Handshake, Glassdoor, or a company careers page. ApplyReady works on all of them automatically.</p>
+          </div>
+        </div>
+
+        <div class="step-snapshot">
+          <div class="snapshot-bar">
+            <div class="snapshot-dots">
+              <div class="snapshot-dot"></div>
+              <div class="snapshot-dot"></div>
+              <div class="snapshot-dot"></div>
+            </div>
+            <div class="snapshot-url">linkedin.com/jobs/view/...</div>
+          </div>
+          <img class="snapshot-img" src="assets/docs/step-4.png" alt="Job listing on LinkedIn" />
+          <div class="snapshot-caption">Any job board · ApplyReady detects the listing automatically</div>
+        </div>
+
+        <div class="callout note">
+          <span class="callout-icon">ℹ</span>
+          <div><strong>Selection mode</strong> On pages where auto-detect doesn't work, select the job description text with your cursor. A floating Analyze button will appear.</div>
+        </div>
+      </div>
+
+      <hr class="step-divider" />
+
+      <!-- STEP 5 -->
+      <div class="step-block" id="step-5">
+        <div class="step-header">
+          <span class="step-badge">Step 05</span>
+          <div class="step-title-group">
+            <h2>Click Analyze</h2>
+            <p>Open the ApplyReady panel and click "Analyze this position." The extension reads the listing, cross-references your profile and visa status, and returns a result in seconds.</p>
+          </div>
+        </div>
+
+        <div class="step-snapshot">
+          <div class="snapshot-bar">
+            <div class="snapshot-dots">
+              <div class="snapshot-dot"></div>
+              <div class="snapshot-dot"></div>
+              <div class="snapshot-dot"></div>
+            </div>
+            <div class="snapshot-url">ApplyReady · Analyzing…</div>
+          </div>
+          <img class="snapshot-img" src="assets/docs/step-5.png" alt="Clicking Analyze button" />
+          <div class="snapshot-caption">ApplyReady panel · Analyze button</div>
+        </div>
+      </div>
+
+      <hr class="step-divider" />
+
+      <!-- STEP 6 -->
+      <div class="step-block" id="step-6">
+        <div class="step-header">
+          <span class="step-badge">Step 06</span>
+          <div class="step-title-group">
+            <h2>Read your verdict</h2>
+            <p>You'll get a clear APPLY, SKIP, or MAYBE — with a confidence level, a summary, a list of reasons to apply, and any red flags including visa conflicts, location issues, or experience gaps.</p>
+          </div>
+        </div>
+
+        <div class="step-snapshot">
+          <div class="snapshot-bar">
+            <div class="snapshot-dots">
+              <div class="snapshot-dot"></div>
+              <div class="snapshot-dot"></div>
+              <div class="snapshot-dot"></div>
+            </div>
+            <div class="snapshot-url">ApplyReady · Results</div>
+          </div>
+          <img class="snapshot-img" src="assets/docs/step-6.png" alt="Verdict screen with APPLY result" />
+          <div class="snapshot-caption">Verdict panel · APPLY / SKIP / MAYBE with breakdown</div>
+        </div>
+
+        <div class="callout tip">
+          <span class="callout-icon">✦</span>
+          <div><strong>MAYBE means ask</strong> A MAYBE verdict usually means one thing is unclear — sponsorship not confirmed, hybrid policy vague. The red flags section tells you exactly what to ask the recruiter.</div>
+        </div>
+      </div>
+
+      <hr class="step-divider" />
+
+      <!-- STEP 7 -->
+      <div class="step-block" id="step-7">
+        <div class="step-header">
+          <span class="step-badge">Step 07</span>
+          <div class="step-title-group">
+            <h2>Draft your outreach</h2>
+            <p>Below the verdict, choose a format — Cover Letter, Email, LinkedIn, or Handshake. Optionally add the recruiter's name. Click Generate, then copy and send.</p>
+          </div>
+        </div>
+
+        <div class="step-snapshot">
+          <div class="snapshot-bar">
+            <div class="snapshot-dots">
+              <div class="snapshot-dot"></div>
+              <div class="snapshot-dot"></div>
+              <div class="snapshot-dot"></div>
+            </div>
+            <div class="snapshot-url">ApplyReady · Outreach</div>
+          </div>
+          <img class="snapshot-img" src="assets/docs/step-7.png" alt="Outreach draft panel" />
+          <div class="snapshot-caption">Outreach panel · Four formats, one click</div>
+        </div>
+
+        <div class="callout note">
+          <span class="callout-icon">ℹ</span>
+          <div><strong>Add the recruiter's name</strong> If you found the recruiter on LinkedIn, paste their first name before generating. The message will address them directly instead of "Dear Hiring Manager."</div>
+        </div>
+      </div>
+
+      <!-- DONE -->
+      <div class="done-block">
+        <h3>You're ready to apply.</h3>
+        <p>That's the whole workflow — install once, analyze every listing in seconds, send outreach that actually sounds like you.</p>
+        <a href="https://chromewebstore.google.com" target="_blank" class="done-btn">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M8 1v8M5 6l3 3 3-3M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Download Extension
+        </a>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // Sidebar active state on scroll
+    const steps = document.querySelectorAll('.step-block');
+    const links = document.querySelectorAll('.sidebar-link');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          links.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.sidebar-link[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+
+    steps.forEach(s => observer.observe(s));
+  </script>
+
+</body>
+</html>
