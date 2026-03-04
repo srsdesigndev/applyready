@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — ApplyReady</title>
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --g:        #06923E;
+      --g-light:  #edf7f1;
+      --g-mid:    #c2e0ce;
+      --g-hover:  #057a34;
+      --black:    #0d0b12;
+      --ink:      #1c1729;
+      --ink-2:    #3b3557;
+      --ink-3:    #6e6a85;
+      --ink-4:    #9e9ab5;
+      --rule:     #e9e7f0;
+      --surface:  #faf9ff;
+      --white:    #ffffff;
+      --font-ui:  'DM Sans', sans-serif;
+      --font-mono:'DM Mono', monospace;
+      --radius:   14px;
+      --radius-sm:8px;
+      --max-w:    1160px;
+      --nav-h:    68px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      background: var(--white);
+      color: var(--ink);
+      font-family: var(--font-ui);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* NAV */
+    #navbar {
+      position: sticky; top: 0; z-index: 1000;
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(16px);
+      border-bottom: 1.5px solid var(--rule);
+    }
+    .nav-inner {
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 0 40px; height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--font-ui);
+      font-size: 20px; font-weight: 700; color: var(--ink);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav-logo span { color: var(--g); font-weight: 400; }
+    .nav-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 600; color: var(--ink-3);
+      padding: 7px 14px; border-radius: var(--radius-sm);
+      border: 1.5px solid var(--rule); background: var(--white);
+      transition: color .12s, border-color .12s, background .12s;
+    }
+    .nav-back:hover { color: var(--ink); border-color: var(--g-mid); background: var(--g-light); }
+    .nav-back svg { color: var(--ink-4); transition: color .12s; }
+    .nav-back:hover svg { color: var(--g); }
+
+    /* PAGE HEADER */
+    .page-header {
+      border-bottom: 1.5px solid var(--rule);
+      background: var(--surface);
+      padding: 64px 40px 56px;
+    }
+    .page-header-inner { max-width: var(--max-w); margin: 0 auto; }
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px; font-weight: 500;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--g);
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 16px;
+    }
+    .eyebrow::before {
+      content: ''; width: 20px; height: 1.5px;
+      background: var(--g); flex-shrink: 0;
+    }
+    .page-h1 {
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 700; letter-spacing: -.03em;
+      color: var(--black); margin-bottom: 10px;
+      line-height: 1.08;
+    }
+    .page-updated {
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--ink-4); letter-spacing: .04em;
+    }
+
+    /* MAIN LAYOUT */
+    .privacy-body {
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 64px 40px;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 56px;
+      align-items: start;
+    }
+
+    /* LEFT: CONTENT */
+    .privacy-col {}
+
+    .privacy-highlight {
+      background: var(--g-light);
+      border: 1.5px solid var(--g-mid);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      margin-bottom: 40px;
+      font-size: 14px; line-height: 1.75;
+      color: var(--g); font-weight: 600;
+    }
+
+    .privacy-section { margin-bottom: 40px; }
+
+    .privacy-section-label {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 14px;
+    }
+    .privacy-section-num {
+      font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--ink-4);
+    }
+    .privacy-section-title {
+      font-size: 13px; font-weight: 700; color: var(--ink-2);
+    }
+
+    .privacy-section h2 {
+      font-size: clamp(18px, 2vw, 22px);
+      font-weight: 700; letter-spacing: -.02em;
+      color: var(--black); margin-bottom: 14px;
+      line-height: 1.15;
+    }
+    .privacy-section p {
+      font-size: 14px; line-height: 1.85;
+      color: var(--ink-3); margin-bottom: 12px;
+    }
+    .privacy-section p:last-child { margin-bottom: 0; }
+    .privacy-section p a { color: var(--g); }
+    .privacy-section p a:hover { text-decoration: underline; }
+    .privacy-section p strong { color: var(--ink-2); font-weight: 600; }
+    .privacy-section p code {
+      font-family: var(--font-mono); font-size: 12px;
+      background: var(--surface); border: 1px solid var(--rule);
+      padding: 2px 7px; border-radius: 5px; color: var(--ink-2);
+    }
+
+    .privacy-list { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+    .privacy-list-item { display: flex; gap: 12px; align-items: flex-start; }
+    .privacy-list-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--g); flex-shrink: 0; margin-top: 8px;
+    }
+    .privacy-list-item p {
+      margin: 0; font-size: 14px; line-height: 1.75; color: var(--ink-3);
+    }
+    .privacy-list-item p strong { color: var(--ink-2); font-weight: 600; }
+    .privacy-list-item p a { color: var(--g); }
+    .privacy-list-item p a:hover { text-decoration: underline; }
+    .privacy-list-item p code {
+      font-family: var(--font-mono); font-size: 12px;
+      background: var(--surface); border: 1px solid var(--rule);
+      padding: 2px 7px; border-radius: 5px; color: var(--ink-2);
+    }
+
+    .privacy-divider {
+      border: none; border-top: 1.5px solid var(--rule);
+      margin: 36px 0;
+    }
+
+    /* SIDEBAR */
+    .sidebar-col { display: flex; flex-direction: column; gap: 16px; }
+
+    .sidebar-card {
+      border: 1.5px solid var(--rule);
+      border-radius: var(--radius); overflow: hidden;
+    }
+    .sidebar-card-head {
+      padding: 14px 20px; border-bottom: 1.5px solid var(--rule);
+      font-family: var(--font-mono); font-size: 10px;
+      font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--ink-4); background: var(--surface);
+    }
+    .sidebar-card-body { padding: 20px; background: var(--white); }
+
+    /* contact */
+    .contact-email {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--g-light); border: 1.5px solid var(--g-mid);
+      border-radius: var(--radius-sm); padding: 13px 16px;
+      margin-bottom: 14px; transition: border-color .15s;
+    }
+    .contact-email:hover { border-color: var(--g); }
+    .contact-email-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--g); display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-email-label {
+      font-family: var(--font-mono); font-size: 9.5px;
+      font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--g); margin-bottom: 2px;
+    }
+    .contact-email-addr {
+      font-size: 12.5px; font-weight: 600; color: var(--ink);
+      word-break: break-all;
+    }
+    .contact-note { font-size: 12.5px; color: var(--ink-3); line-height: 1.65; }
+
+    /* section nav */
+    .sidebar-nav { display: flex; flex-direction: column; gap: 2px; }
+    .sidebar-nav-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 9px 12px; border-radius: var(--radius-sm);
+      font-size: 13px; font-weight: 600; color: var(--ink-3);
+      cursor: pointer; transition: background .12s, color .12s;
+      text-decoration: none;
+    }
+    .sidebar-nav-item:hover { background: var(--surface); color: var(--ink); }
+    .sidebar-nav-num {
+      font-family: var(--font-mono); font-size: 10px;
+      color: var(--ink-4); font-weight: 400;
+    }
+
+    /* about */
+    .about-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 9px 0; border-bottom: 1px solid var(--rule);
+      font-size: 13px;
+    }
+    .about-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .about-key { color: var(--ink-3); font-weight: 500; }
+    .about-val { color: var(--ink); font-weight: 600; font-family: var(--font-mono); font-size: 12px; }
+    .about-val.green { color: var(--g); }
+
+    /* FOOTER */
+    footer { border-top: 1.5px solid var(--rule); background: var(--surface); }
+    .footer-inner {
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 28px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; flex-wrap: wrap;
+    }
+    .footer-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 16px; font-weight: 700; color: var(--ink);
+    }
+    .footer-logo span { color: var(--g); font-weight: 400; }
+    .footer-links { display: flex; gap: 4px; flex-wrap: wrap; }
+    .footer-links a {
+      font-size: 13px; font-weight: 600; color: var(--ink-3);
+      padding: 5px 10px; border-radius: 6px;
+      transition: color .12s, background .12s;
+    }
+    .footer-links a:hover { color: var(--g); background: var(--g-light); }
+    .footer-copy {
+      font-family: var(--font-mono); font-size: 10px;
+      color: var(--ink-4); letter-spacing: .06em; text-transform: uppercase;
+    }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: .1s; }
+    .delay-2 { transition-delay: .2s; }
+
+    /* RESPONSIVE */
+    @media (max-width: 860px) {
+      .privacy-body { grid-template-columns: 1fr; gap: 40px; padding: 40px 24px; }
+      .sidebar-col { order: -1; }
+      .page-header { padding: 48px 24px 40px; }
+    }
+    @media (max-width: 480px) {
+      .nav-inner { padding: 0 20px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M2.06935 5.25839C2 5.62595 2 6.06722 2 6.94975V14C2 17.7712 2 19.6569 3.17157 20.8284C4.34315 22 6.22876 22 10 22H14C17.7712 22 19.6569 22 20.8284 20.8284C22 19.6569 22 17.7712 22 14V11.7979C22 9.16554 22 7.84935 21.2305 6.99383C21.1598 6.91514 21.0849 6.84024 21.0062 6.76946C20.1506 6 18.8345 6 16.2021 6H15.8284C14.6747 6 14.0979 6 13.5604 5.84678C13.2651 5.7626 12.9804 5.64471 12.7121 5.49543C12.2237 5.22367 11.8158 4.81578 11 4L10.4497 3.44975C10.1763 3.17633 10.0396 3.03961 9.89594 2.92051C9.27652 2.40704 8.51665 2.09229 7.71557 2.01738C7.52976 2 7.33642 2 6.94975 2C6.06722 2 5.62595 2 5.25839 2.06935C3.64031 2.37464 2.37464 3.64031 2.06935 5.25839ZM12.9524 11.1989L12.8541 11.0225C12.4741 10.3408 12.2841 10 12 10C11.7159 10 11.5259 10.3408 11.1459 11.0225L11.0476 11.1989C10.9397 11.3926 10.8857 11.4894 10.8015 11.5533C10.7173 11.6172 10.6125 11.641 10.4028 11.6884L10.2119 11.7316C9.47396 11.8986 9.10501 11.982 9.01723 12.2643C8.92945 12.5466 9.18097 12.8407 9.68403 13.429L9.81418 13.5812C9.95713 13.7483 10.0286 13.8319 10.0608 13.9353C10.0929 14.0387 10.0821 14.1502 10.0605 14.3733L10.0408 14.5763C9.96476 15.3612 9.92674 15.7536 10.1565 15.9281C10.3864 16.1025 10.7318 15.9435 11.4227 15.6254L11.6014 15.5431C11.7978 15.4527 11.8959 15.4075 12 15.4075C12.1041 15.4075 12.2022 15.4527 12.3986 15.5431L12.5773 15.6254C13.2682 15.9435 13.6136 16.1025 13.8435 15.9281C14.0733 15.7536 14.0352 15.3612 13.9592 14.5763L13.9395 14.3733C13.9179 14.1502 13.9071 14.0387 13.9392 13.9353C13.9714 13.8319 14.0429 13.7483 14.1858 13.5812L14.316 13.429C14.819 12.8407 15.0706 12.5466 14.9828 12.2643C14.895 11.982 14.526 11.8986 13.7881 11.7316L13.5972 11.6884C13.3875 11.641 13.2827 11.6172 13.1985 11.5533C13.1143 11.4894 10.0603 11.3926 12.9524 11.1989Z"
+            fill="#06923E" />
+        </svg>
+        Apply<span>Ready</span>
+      </a>
+      <a href="index.html" class="nav-back">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+        </svg>
+        Back to Home
+      </a>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <div class="page-header-inner reveal">
+      <div class="eyebrow">Legal</div>
+      <h1 class="page-h1">Privacy Policy</h1>
+      <div class="page-updated">Last updated: March 1, 2026</div>
+    </div>
+  </div>
+
+  <div class="privacy-body">
+
+    <!-- LEFT: CONTENT -->
+    <div class="privacy-col reveal delay-1">
+
+      <div class="privacy-highlight">
+        The short version: ApplyReady does not sell your data, does not share it with advertisers, and does not store your resume on our servers. Your resume stays in your browser.
+      </div>
+
+      <!-- 01 -->
+      <div class="privacy-section" id="section-who">
+        <div class="privacy-section-label">
+          <span class="privacy-section-num">01</span>
+          <span class="privacy-section-title">Who we are</span>
+        </div>
+        <h2>Who we are</h2>
+        <p>ApplyReady is a Chrome extension built to help international students analyze job listings for visa eligibility and role fit before applying. It is developed and maintained by a student at Youngstown State University.</p>
+        <p>Contact: <strong>sharmasundararj@gmail.com</strong></p>
+      </div>
+
+      <hr class="privacy-divider" />
+
+      <!-- 02 -->
+      <div class="privacy-section" id="section-collect">
+        <div class="privacy-section-label">
+          <span class="privacy-section-num">02</span>
+          <span class="privacy-section-title">What data we collect</span>
+        </div>
+        <h2>What data we collect</h2>
+        <p>ApplyReady collects the minimum data necessary to function:</p>
+        <div class="privacy-list">
+          <div class="privacy-list-item">
+            <div class="privacy-list-dot"></div>
+            <p><strong>Email address</strong> — used to create and authenticate your account via magic link. Stored in our authentication system (Supabase).</p>
+          </div>
+          <div class="privacy-list-item">
+            <div class="privacy-list-dot"></div>
+            <p><strong>Usage logs</strong> — we record when an analysis or outreach request is made (timestamp, request type) for rate limiting purposes. We do not log the content of job listings or outreach messages.</p>
+          </div>
+          <div class="privacy-list-item">
+            <div class="privacy-list-dot"></div>
+            <p><strong>Resume and profile text</strong> — stored locally in your browser using <code>chrome.storage</code>. Sent to our API only during an analysis request. Never stored on our servers after processing.</p>
+          </div>
+          <div class="privacy-list-item">
+            <div class="privacy-list-dot"></div>
+            <p><strong>Visa and location preferences</strong> — stored locally in your browser only. Transmitted to our API only as part of an analysis request and not retained afterward.</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="privacy-divider" />
+
+      <!-- 03 -->
+      <div class="privacy-section" id="section-not-collect">
+        <div class="privacy-section-label">
+          <span class="privacy-section-num">03</span>
+          <span class="privacy-section-title">What we do not collect</span>
+        </div>
+        <h2>What we do not collect</h2>
+        <div class="privacy-list">
+          <div class="privacy-list-item"><div class="privacy-list-dot"></div><p>Your browsing history or visited pages</p></div>
+          <div class="privacy-list-item"><div class="privacy-list-dot"></div><p>The content of job listings you analyze</p></div>
+          <div class="privacy-list-item"><div class="privacy-list-dot"></div><p>Outreach messages generated by the extension</p></div>
+          <div class="privacy-list-item"><div class="privacy-list-dot"></div><p>Payment or financial information</p></div>
+          <div class="privacy-list-item"><div class="privacy-list-dot"></div><p>Advertising trackers or third-party analytics</p></div>
+          <div class="privacy-list-item"><div class="privacy-list-dot"></div><p>Any data sold or shared with third parties for marketing</p></div>
+        </div>
+      </div>
+
+      <hr class="privacy-divider" />
+
+      <!-- 04 -->
+      <div class="privacy-section" id="section-use">
+        <div class="privacy-section-label">
+          <span class="privacy-section-num">04</span>
+          <span class="privacy-section-title">How we use your data</span>
+        </div>
+        <h2>How we use your data</h2>
+        <div class="privacy-list">
+          <div class="privacy-list-item">
+            <div class="privacy-list-dot"></div>
+            <p><strong>Email</strong> — to authenticate you and send magic links. We do not send marketing emails without your explicit consent.</p>
+          </div>
+          <div class="privacy-list-item">
+            <div class="privacy-list-dot"></div>
+            <p><strong>Usage logs</strong> — to enforce daily rate limits (25 analyses per day during beta) and prevent abuse of the service.</p>
+          </div>
+          <div class="privacy-list-item">
+            <div class="privacy-list-dot"></div>
+            <p><strong>Resume and preferences</strong> — sent to our API during analysis to generate a personalized job fit verdict. Not stored after the request completes.</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="privacy-divider" />
+
+      <!-- 05 -->
+      <div class="privacy-section" id="section-third">
+        <div class="privacy-section-label">
+          <span class="privacy-section-num">05</span>
+          <span class="privacy-section-title">Third-party services</span>
+        </div>
+        <h2>Third-party services</h2>
+        <div class="privacy-list">
+          <div class="privacy-list-item">
+            <div class="privacy-list-dot"></div>
+            <p><strong>Supabase</strong> — handles authentication and usage logging. Subject to <a href="https://supabase.com/privacy" target="_blank">Supabase's Privacy Policy</a>.</p>
+          </div>
+          <div class="privacy-list-item">
+            <div class="privacy-list-dot"></div>
+            <p><strong>Anthropic Claude API</strong> — powers job analysis and outreach generation. Resume and job content are sent over HTTPS during analysis. Subject to <a href="https://www.anthropic.com/privacy" target="_blank">Anthropic's Privacy Policy</a>.</p>
+          </div>
+          <div class="privacy-list-item">
+            <div class="privacy-list-dot"></div>
+            <p><strong>Google Fonts</strong> — loaded for typography display only. No user data is shared.</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="privacy-divider" />
+
+      <!-- 06 -->
+      <div class="privacy-section" id="section-security">
+        <div class="privacy-section-label">
+          <span class="privacy-section-num">06</span>
+          <span class="privacy-section-title">Storage and security</span>
+        </div>
+        <h2>Storage and security</h2>
+        <p>Your resume and preferences are stored locally using Chrome's <code>chrome.storage</code> API — they do not leave your device except when transmitted over HTTPS to our API during an analysis request.</p>
+        <p>Your email and usage logs are stored in Supabase, which uses industry-standard encryption at rest and in transit. Authentication sessions use short-lived JWT tokens with refresh rotation.</p>
+      </div>
+
+      <hr class="privacy-divider" />
+
+      <!-- 07 -->
+      <div class="privacy-section" id="section-rights">
+        <div class="privacy-section-label">
+          <span class="privacy-section-num">07</span>
+          <span class="privacy-section-title">Your rights</span>
+        </div>
+        <h2>Your rights</h2>
+        <div class="privacy-list">
+          <div class="privacy-list-item"><div class="privacy-list-dot"></div><p><strong>Access</strong> — request a copy of any data we hold about you.</p></div>
+          <div class="privacy-list-item"><div class="privacy-list-dot"></div><p><strong>Deletion</strong> — request deletion of your account and all associated data at any time.</p></div>
+          <div class="privacy-list-item"><div class="privacy-list-dot"></div><p><strong>Correction</strong> — update your email by contacting us directly.</p></div>
+          <div class="privacy-list-item"><div class="privacy-list-dot"></div><p><strong>Portability</strong> — export your data upon request.</p></div>
+        </div>
+        <p style="margin-top: 16px;">To exercise any of these rights, email <strong>sharmasundararj@gmail.com</strong>.</p>
+      </div>
+
+      <hr class="privacy-divider" />
+
+      <!-- 08 -->
+      <div class="privacy-section" id="section-changes">
+        <div class="privacy-section-label">
+          <span class="privacy-section-num">08</span>
+          <span class="privacy-section-title">Changes to this policy</span>
+        </div>
+        <h2>Changes to this policy</h2>
+        <p>We may update this policy as the product evolves. Material changes will be communicated via email. Continued use of ApplyReady after changes are posted constitutes acceptance of the updated policy.</p>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: SIDEBAR -->
+    <div class="sidebar-col reveal delay-2">
+
+      <!-- Contact -->
+      <div class="sidebar-card">
+        <div class="sidebar-card-head">Contact</div>
+        <div class="sidebar-card-body">
+          <a href="mailto:sharmasundararj@gmail.com" class="contact-email">
+            <div class="contact-email-icon">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-email-label">Email</div>
+              <div class="contact-email-addr">sharmasundararj@gmail.com</div>
+            </div>
+          </a>
+          <p class="contact-note">Questions about your data? We respond within 24 hours.</p>
+        </div>
+      </div>
+
+      <!-- Section nav -->
+      <div class="sidebar-card">
+        <div class="sidebar-card-head">Sections</div>
+        <div class="sidebar-card-body" style="padding: 12px;">
+          <div class="sidebar-nav">
+            <a href="#section-who" class="sidebar-nav-item">Who we are <span class="sidebar-nav-num">01</span></a>
+            <a href="#section-collect" class="sidebar-nav-item">Data we collect <span class="sidebar-nav-num">02</span></a>
+            <a href="#section-not-collect" class="sidebar-nav-item">What we don't collect <span class="sidebar-nav-num">03</span></a>
+            <a href="#section-use" class="sidebar-nav-item">How we use data <span class="sidebar-nav-num">04</span></a>
+            <a href="#section-third" class="sidebar-nav-item">Third-party services <span class="sidebar-nav-num">05</span></a>
+            <a href="#section-security" class="sidebar-nav-item">Storage &amp; security <span class="sidebar-nav-num">06</span></a>
+            <a href="#section-rights" class="sidebar-nav-item">Your rights <span class="sidebar-nav-num">07</span></a>
+            <a href="#section-changes" class="sidebar-nav-item">Policy changes <span class="sidebar-nav-num">08</span></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- About -->
+      <div class="sidebar-card">
+        <div class="sidebar-card-head">At a glance</div>
+        <div class="sidebar-card-body">
+          <div class="about-row">
+            <span class="about-key">Data sold</span>
+            <span class="about-val green">Never</span>
+          </div>
+          <div class="about-row">
+            <span class="about-key">Resume stored</span>
+            <span class="about-val green">Local only</span>
+          </div>
+          <div class="about-row">
+            <span class="about-key">Ad trackers</span>
+            <span class="about-val green">None</span>
+          </div>
+          <div class="about-row">
+            <span class="about-key">Marketing emails</span>
+            <span class="about-val green">Opt-in only</span>
+          </div>
+          <div class="about-row">
+            <span class="about-key">Last updated</span>
+            <span class="about-val">Mar 2026</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M2.06935 5.25839C2 5.62595 2 6.06722 2 6.94975V14C2 17.7712 2 19.6569 3.17157 20.8284C4.34315 22 6.22876 22 10 22H14C17.7712 22 19.6569 22 20.8284 20.8284C22 19.6569 22 17.7712 22 14V11.7979C22 9.16554 22 7.84935 21.2305 6.99383C21.1598 6.91514 21.0849 6.84024 21.0062 6.76946C20.1506 6 18.8345 6 16.2021 6H15.8284C14.6747 6 14.0979 6 13.5604 5.84678C13.2651 5.7626 12.9804 5.64471 12.7121 5.49543C12.2237 5.22367 11.8158 4.81578 11 4L10.4497 3.44975C10.1763 3.17633 10.0396 3.03961 9.89594 2.92051C9.27652 2.40704 8.51665 2.09229 7.71557 2.01738C7.52976 2 7.33642 2 6.94975 2C6.06722 2 5.62595 2 5.25839 2.06935C3.64031 2.37464 2.37464 3.64031 2.06935 5.25839ZM12.9524 11.1989L12.8541 11.0225C12.4741 10.3408 12.2841 10 12 10C11.7159 10 11.5259 10.3408 11.1459 11.0225L11.0476 11.1989C10.9397 11.3926 10.8857 11.4894 10.8015 11.5533C10.7173 11.6172 10.6125 11.641 10.4028 11.6884L10.2119 11.7316C9.47396 11.8986 9.10501 11.982 9.01723 12.2643C8.92945 12.5466 9.18097 12.8407 9.68403 13.429L9.81418 13.5812C9.95713 13.7483 10.0286 13.8319 10.0608 13.9353C10.0929 14.0387 10.0821 14.1502 10.0605 14.3733L10.0408 14.5763C9.96476 15.3612 9.92674 15.7536 10.1565 15.9281C10.3864 16.1025 10.7318 15.9435 11.4227 15.6254L11.6014 15.5431C11.7978 15.4527 11.8959 15.4075 12 15.4075C12.1041 15.4075 12.2022 15.4527 12.3986 15.5431L12.5773 15.6254C13.2682 15.9435 13.6136 16.1025 13.8435 15.9281C14.0733 15.7536 14.0352 15.3612 13.9592 14.5763L13.9395 14.3733C13.9179 14.1502 13.9071 14.0387 13.9392 13.9353C13.9714 13.8319 14.0429 13.7483 14.1858 13.5812L14.316 13.429C14.819 12.8407 15.0706 12.5466 14.9828 12.2643C14.895 11.982 14.526 11.8986 13.7881 11.7316L13.5972 11.6884C13.3875 11.641 13.2827 11.6172 13.1985 11.5533C13.1143 11.4894 10.0603 11.3926 12.9524 11.1989Z" fill="#06923E"/>
+        </svg>
+        Apply<span>Ready</span>
+      </a>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#how">How it works</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+         <a href="./test.html?later-install-page">Install</a>
+      </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
+    });
+  </script>
+</body>
+</html>

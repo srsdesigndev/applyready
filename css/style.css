@@ -12,8 +12,8 @@
   --surface:  #faf9ff;
   --white:    #ffffff;
 
-  --font-display: 'Instrument Serif', serif;
-  --font-ui:      'Syne', sans-serif;
+  --font-display: 'DM Sans', sans-serif;
+  --font-ui:      'DM Sans', sans-serif;
   --font-mono:    'DM Mono', monospace;
 
   --radius:    14px;
@@ -34,25 +34,22 @@ body {
   overflow-x: hidden;
 }
 
-
-.nav-logo {
-  display: flex;
-  align-items: center;
-}
-
-.nav-logo svg {
-  margin-right: 8px;
-}
-
-.nav-logo svg path {
-  fill: #06923E;
-}
-
 a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 img, svg { display: block; }
 
 h1, h2, h3, h4 { line-height: 1.1; letter-spacing: -0.02em; }
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+}
+.nav-logo svg {
+  margin-right: 8px;
+}
+.nav-logo svg path {
+  fill: #06923E;
+}
 
 .eyebrow {
   font-family: var(--font-mono);
@@ -131,11 +128,9 @@ h1, h2, h3, h4 { line-height: 1.1; letter-spacing: -0.02em; }
 .nav-logo {
   font-family: var(--font-display);
   font-size: 22px; color: var(--ink); letter-spacing: -.01em;
-  flex-shrink: 0;
+  flex-shrink: 0; font-weight: 700;
 }
-.nav-logo span { font-style: italic; color: var(--ink-3); 
-color: var(--g);
-}
+.nav-logo span { color: var(--g); font-weight: 400; }
 
 .nav-links {
   display: flex; align-items: center; gap: 4px;
@@ -236,10 +231,15 @@ color: var(--g);
 .hero-h1 {
   font-family: var(--font-display);
   font-size: clamp(42px, 4.8vw, 66px);
+  font-weight: 700;
   line-height: 1.06; letter-spacing: -.03em;
   color: var(--black); margin-bottom: 24px;
 }
-.hero-h1 em { font-style: italic; color: var(--g); display: block; }
+.hero-h1 em {
+  font-style: normal;
+  color: var(--g); display: block;
+  font-weight: 400;
+}
 
 .hero-sub {
   font-size: 17px; line-height: 1.7; color: var(--ink-3);
@@ -281,9 +281,9 @@ color: var(--g);
 }
 .mock-wordmark {
   font-family: var(--font-display);
-  font-size: 15px; color: #fff; letter-spacing: -.01em;
+  font-size: 15px; color: #fff; letter-spacing: -.01em; font-weight: 700;
 }
-.mock-wordmark span { font-style: italic; opacity: .6; }
+.mock-wordmark span { opacity: .6; font-weight: 400; }
 .mock-btns { display: flex; gap: 4px; }
 .mock-btn {
   background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.2);
@@ -315,7 +315,7 @@ color: var(--g);
 .mock-vrow { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
 .mock-verdict {
   font-family: var(--font-display);
-  font-size: 26px; letter-spacing: -.03em; line-height: 1;
+  font-size: 26px; letter-spacing: -.03em; line-height: 1; font-weight: 700;
 }
 .mock-verdict.apply { color: var(--g); }
 .mock-verdict.skip  { color: #b83232; }
@@ -414,10 +414,11 @@ color: var(--g);
 .section-h2 {
   font-family: var(--font-display);
   font-size: clamp(34px, 4vw, 54px);
+  font-weight: 700;
   line-height: 1.08; letter-spacing: -.03em;
   color: var(--black); margin-bottom: 16px;
 }
-.section-h2 em { font-style: italic; color: var(--g); }
+.section-h2 em { font-style: normal; color: var(--g); font-weight: 400; }
 .section-sub {
   font-size: 17px; color: var(--ink-3); max-width: 520px; line-height: 1.7;
 }
@@ -619,7 +620,7 @@ color: var(--g);
 }
 .stat-num {
   font-family: var(--font-display);
-  font-size: 56px; line-height: 1; letter-spacing: -.04em;
+  font-size: 56px; line-height: 1; letter-spacing: -.04em; font-weight: 700;
   color: var(--black); margin-bottom: 8px;
 }
 .stat-num span { color: var(--g); }
@@ -646,7 +647,7 @@ color: var(--g);
 .tcard-body {
   font-family: var(--font-display);
   font-size: 17px; line-height: 1.55; color: var(--ink-2);
-  font-style: italic; flex: 1;
+  font-style: normal; flex: 1;
 }
 .tcard-body::before {
   content: '\201C'; color: var(--g);
@@ -677,10 +678,11 @@ color: var(--g);
 .cta-h2 {
   font-family: var(--font-display);
   font-size: clamp(36px, 5vw, 60px);
+  font-weight: 700;
   line-height: 1.08; letter-spacing: -.03em;
   color: #fff; margin-bottom: 16px;
 }
-.cta-h2 em { font-style: italic; color: rgba(255,255,255,.7); }
+.cta-h2 em { font-style: normal; color: rgba(255,255,255,.7); font-weight: 400; }
 
 .cta-sub { font-size: 18px; color: rgba(255,255,255,.7); margin-bottom: 40px; line-height: 1.65; }
 
@@ -719,9 +721,9 @@ footer {
 }
 .footer-logo {
   font-family: var(--font-display);
-  font-size: 18px; color: var(--ink); letter-spacing: -.01em;
+  font-size: 18px; color: var(--ink); letter-spacing: -.01em; font-weight: 700;
 }
-.footer-logo span { font-style: italic; color: var(--ink-3); }
+.footer-logo span { color: var(--ink-3); font-weight: 400; }
 .footer-tagline { font-size: 13px; color: var(--ink-4); margin-top: 3px; }
 
 .footer-links { display: flex; gap: 6px; flex-wrap: wrap; }

@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ — ApplyReady</title>
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --g:        #06923E;
+      --g-light:  #edf7f1;
+      --g-mid:    #c2e0ce;
+      --g-hover:  #057a34;
+      --black:    #0d0b12;
+      --ink:      #1c1729;
+      --ink-2:    #3b3557;
+      --ink-3:    #6e6a85;
+      --ink-4:    #9e9ab5;
+      --rule:     #e9e7f0;
+      --surface:  #faf9ff;
+      --white:    #ffffff;
+      --font-ui:  'DM Sans', sans-serif;
+      --font-mono:'DM Mono', monospace;
+      --radius:   14px;
+      --radius-sm:8px;
+      --max-w:    1160px;
+      --nav-h:    68px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      background: var(--white);
+      color: var(--ink);
+      font-family: var(--font-ui);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* NAV */
+    #navbar {
+      position: sticky; top: 0; z-index: 1000;
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(16px);
+      border-bottom: 1.5px solid var(--rule);
+    }
+    .nav-inner {
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 0 40px; height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--font-ui);
+      font-size: 20px; font-weight: 700; color: var(--ink);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav-logo span { color: var(--g); font-weight: 400; }
+    .nav-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 600; color: var(--ink-3);
+      padding: 7px 14px; border-radius: var(--radius-sm);
+      border: 1.5px solid var(--rule);
+      background: var(--white);
+      transition: color .12s, border-color .12s, background .12s;
+    }
+    .nav-back:hover { color: var(--ink); border-color: var(--g-mid); background: var(--g-light); }
+    .nav-back svg { color: var(--ink-4); transition: color .12s; }
+    .nav-back:hover svg { color: var(--g); }
+
+    /* PAGE HEADER */
+    .page-header {
+      border-bottom: 1.5px solid var(--rule);
+      background: var(--surface);
+      padding: 64px 40px 56px;
+    }
+    .page-header-inner { max-width: var(--max-w); margin: 0 auto; }
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px; font-weight: 500;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--g);
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 16px;
+    }
+    .eyebrow::before {
+      content: ''; width: 20px; height: 1.5px;
+      background: var(--g); flex-shrink: 0;
+    }
+    .page-h1 {
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 700; letter-spacing: -.03em;
+      color: var(--black); margin-bottom: 14px;
+      line-height: 1.08;
+    }
+    .page-sub {
+      font-size: 17px; color: var(--ink-3); line-height: 1.7;
+      max-width: 500px;
+    }
+
+    /* MAIN LAYOUT */
+    .faq-body {
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 64px 40px;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 56px;
+      align-items: start;
+    }
+
+    /* LEFT: ACCORDION COLUMN */
+    .faq-col {}
+    .col-label {
+      font-family: var(--font-mono);
+      font-size: 10px; font-weight: 500;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--ink-4); margin-bottom: 24px;
+    }
+
+    /* Category filter */
+    .faq-categories {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 32px;
+    }
+    .faq-cat-btn {
+      font-family: var(--font-mono);
+      font-size: 10px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+      border: 1.5px solid var(--rule);
+      background: var(--white); color: var(--ink-3);
+      padding: 6px 13px; border-radius: 20px;
+      cursor: pointer; transition: all .15s;
+    }
+    .faq-cat-btn:hover { border-color: var(--g-mid); color: var(--ink); }
+    .faq-cat-btn.active {
+      background: var(--g); border-color: var(--g); color: #fff;
+    }
+
+    /* Group label */
+    .faq-group { margin-bottom: 40px; }
+    .faq-group.hidden { display: none; }
+    .faq-group-label {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 14px;
+    }
+    .faq-group-num {
+      font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--ink-4);
+    }
+    .faq-group-title {
+      font-size: 13px; font-weight: 700; color: var(--ink-2);
+      letter-spacing: -.01em;
+    }
+
+    /* Accordion item */
+    .faq-item {
+      border: 1.5px solid var(--rule);
+      border-radius: var(--radius);
+      background: var(--white);
+      margin-bottom: 8px;
+      overflow: hidden;
+      transition: border-color .2s;
+    }
+    .faq-item:hover { border-color: var(--g-mid); }
+    .faq-item.open {
+      border-color: var(--g-mid);
+      box-shadow: 0 0 0 3px rgba(6,146,62,.05);
+    }
+
+    .faq-q {
+      width: 100%; text-align: left;
+      background: none; border: none; cursor: pointer;
+      padding: 18px 22px;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 16px;
+      transition: background .15s;
+    }
+    .faq-q:hover { background: var(--surface); }
+    .faq-item.open .faq-q { background: var(--surface); }
+
+    .faq-q-text {
+      font-family: var(--font-ui);
+      font-size: 14px; font-weight: 600;
+      color: var(--ink); text-align: left; line-height: 1.4;
+    }
+
+    .faq-chevron {
+      width: 18px; height: 18px; flex-shrink: 0;
+      color: var(--ink-4); transition: transform .2s, color .15s;
+    }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); color: var(--g); }
+
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height .32s ease, padding .25s ease;
+      padding: 0 22px;
+      border-top: 0px solid var(--rule);
+    }
+    .faq-item.open .faq-a {
+      max-height: 600px;
+      padding-bottom: 20px;
+      border-top: 1.5px solid var(--rule);
+    }
+    .faq-a p {
+      font-size: 14px; line-height: 1.8;
+      color: var(--ink-3); margin-top: 14px;
+    }
+    .faq-a p + p { margin-top: 8px; }
+    .faq-a p strong { color: var(--ink-2); font-weight: 600; }
+    .faq-a p a { color: var(--g); }
+    .faq-a p a:hover { text-decoration: underline; }
+    .faq-a p code {
+      font-family: var(--font-mono);
+      font-size: 12px; background: var(--surface);
+      border: 1px solid var(--rule);
+      padding: 2px 7px; border-radius: 5px; color: var(--ink-2);
+    }
+    .faq-tags {
+      display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px;
+    }
+    .faq-tag {
+      font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: var(--g); background: var(--g-light);
+      border: 1px solid var(--g-mid);
+      padding: 3px 9px; border-radius: 20px;
+    }
+
+    .faq-divider {
+      border: none; border-top: 1.5px solid var(--rule);
+      margin: 32px 0;
+    }
+    .faq-divider.hidden { display: none; }
+
+    /* SIDEBAR */
+    .sidebar-col { display: flex; flex-direction: column; gap: 16px; }
+
+    .sidebar-card {
+      border: 1.5px solid var(--rule);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .sidebar-card-head {
+      padding: 14px 20px;
+      border-bottom: 1.5px solid var(--rule);
+      font-family: var(--font-mono); font-size: 10px;
+      font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--ink-4); background: var(--surface);
+    }
+    .sidebar-card-body { padding: 20px; background: var(--white); }
+
+    /* contact card */
+    .contact-email {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--g-light); border: 1.5px solid var(--g-mid);
+      border-radius: var(--radius-sm); padding: 13px 16px;
+      margin-bottom: 14px; transition: border-color .15s;
+    }
+    .contact-email:hover { border-color: var(--g); }
+    .contact-email-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--g); display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-email-label {
+      font-family: var(--font-mono); font-size: 9.5px;
+      font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--g); margin-bottom: 2px;
+    }
+    .contact-email-addr {
+      font-size: 12.5px; font-weight: 600; color: var(--ink);
+      word-break: break-all;
+    }
+    .contact-note {
+      font-size: 12.5px; color: var(--ink-3); line-height: 1.65;
+    }
+
+    /* categories nav in sidebar */
+    .sidebar-nav { display: flex; flex-direction: column; gap: 2px; }
+    .sidebar-nav-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 9px 12px; border-radius: var(--radius-sm);
+      font-size: 13px; font-weight: 600; color: var(--ink-3);
+      cursor: pointer; transition: background .12s, color .12s;
+    }
+    .sidebar-nav-item:hover { background: var(--surface); color: var(--ink); }
+    .sidebar-nav-item.active { background: var(--g-light); color: var(--g); }
+    .sidebar-nav-num {
+      font-family: var(--font-mono); font-size: 10px;
+      color: var(--ink-4); font-weight: 400;
+    }
+    .sidebar-nav-item.active .sidebar-nav-num { color: var(--g-hover); }
+
+    /* about rows */
+    .about-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 9px 0; border-bottom: 1px solid var(--rule);
+      font-size: 13px;
+    }
+    .about-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .about-key { color: var(--ink-3); font-weight: 500; }
+    .about-val { color: var(--ink); font-weight: 600; font-family: var(--font-mono); font-size: 12px; }
+    .about-val.green { color: var(--g); }
+
+    /* FOOTER */
+    footer { border-top: 1.5px solid var(--rule); background: var(--surface); }
+    .footer-inner {
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 28px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; flex-wrap: wrap;
+    }
+    .footer-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 16px; font-weight: 700; color: var(--ink);
+    }
+    .footer-logo span { color: var(--g); font-weight: 400; }
+    .footer-links { display: flex; gap: 4px; flex-wrap: wrap; }
+    .footer-links a {
+      font-size: 13px; font-weight: 600; color: var(--ink-3);
+      padding: 5px 10px; border-radius: 6px;
+      transition: color .12s, background .12s;
+    }
+    .footer-links a:hover { color: var(--g); background: var(--g-light); }
+    .footer-copy {
+      font-family: var(--font-mono); font-size: 10px;
+      color: var(--ink-4); letter-spacing: .06em; text-transform: uppercase;
+    }
+
+    /* REVEAL */
+    .reveal {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: .1s; }
+    .delay-2 { transition-delay: .2s; }
+
+    /* RESPONSIVE */
+    @media (max-width: 860px) {
+      .faq-body { grid-template-columns: 1fr; gap: 40px; padding: 40px 24px; }
+      .sidebar-col { order: -1; }
+      .page-header { padding: 48px 24px 40px; }
+    }
+    @media (max-width: 480px) {
+      .nav-inner { padding: 0 20px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M2.06935 5.25839C2 5.62595 2 6.06722 2 6.94975V14C2 17.7712 2 19.6569 3.17157 20.8284C4.34315 22 6.22876 22 10 22H14C17.7712 22 19.6569 22 20.8284 20.8284C22 19.6569 22 17.7712 22 14V11.7979C22 9.16554 22 7.84935 21.2305 6.99383C21.1598 6.91514 21.0849 6.84024 21.0062 6.76946C20.1506 6 18.8345 6 16.2021 6H15.8284C14.6747 6 14.0979 6 13.5604 5.84678C13.2651 5.7626 12.9804 5.64471 12.7121 5.49543C12.2237 5.22367 11.8158 4.81578 11 4L10.4497 3.44975C10.1763 3.17633 10.0396 3.03961 9.89594 2.92051C9.27652 2.40704 8.51665 2.09229 7.71557 2.01738C7.52976 2 7.33642 2 6.94975 2C6.06722 2 5.62595 2 5.25839 2.06935C3.64031 2.37464 2.37464 3.64031 2.06935 5.25839ZM12.9524 11.1989L12.8541 11.0225C12.4741 10.3408 12.2841 10 12 10C11.7159 10 11.5259 10.3408 11.1459 11.0225L11.0476 11.1989C10.9397 11.3926 10.8857 11.4894 10.8015 11.5533C10.7173 11.6172 10.6125 11.641 10.4028 11.6884L10.2119 11.7316C9.47396 11.8986 9.10501 11.982 9.01723 12.2643C8.92945 12.5466 9.18097 12.8407 9.68403 13.429L9.81418 13.5812C9.95713 13.7483 10.0286 13.8319 10.0608 13.9353C10.0929 14.0387 10.0821 14.1502 10.0605 14.3733L10.0408 14.5763C9.96476 15.3612 9.92674 15.7536 10.1565 15.9281C10.3864 16.1025 10.7318 15.9435 11.4227 15.6254L11.6014 15.5431C11.7978 15.4527 11.8959 15.4075 12 15.4075C12.1041 15.4075 12.2022 15.4527 12.3986 15.5431L12.5773 15.6254C13.2682 15.9435 13.6136 16.1025 13.8435 15.9281C14.0733 15.7536 14.0352 15.3612 13.9592 14.5763L13.9395 14.3733C13.9179 14.1502 13.9071 14.0387 13.9392 13.9353C13.9714 13.8319 14.0429 13.7483 14.1858 13.5812L14.316 13.429C14.819 12.8407 15.0706 12.5466 14.9828 12.2643C14.895 11.982 14.526 11.8986 13.7881 11.7316L13.5972 11.6884C13.3875 11.641 13.2827 11.6172 13.1985 11.5533C13.1143 11.4894 10.0603 11.3926 12.9524 11.1989Z"
+            fill="#06923E" />
+        </svg>
+        Apply<span>Ready</span>
+      </a>
+      <a href="index.html" class="nav-back">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+        </svg>
+        Back to Home
+      </a>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <div class="page-header-inner reveal">
+      <div class="eyebrow">FAQ</div>
+      <h1 class="page-h1">Frequently Asked Questions</h1>
+      <p class="page-sub">Everything you need to know about ApplyReady — how it works, what it does with your data, and who it's built for.</p>
+    </div>
+  </div>
+
+  <div class="faq-body">
+
+    <!-- LEFT: ACCORDION -->
+    <div class="faq-col reveal delay-1">
+
+      <div class="faq-categories">
+        <button class="faq-cat-btn active" data-filter="all">All</button>
+        <button class="faq-cat-btn" data-filter="getting-started">Getting Started</button>
+        <button class="faq-cat-btn" data-filter="visa">Visa</button>
+        <button class="faq-cat-btn" data-filter="features">Features</button>
+        <button class="faq-cat-btn" data-filter="outreach">Outreach</button>
+        <button class="faq-cat-btn" data-filter="privacy">Privacy</button>
+        <button class="faq-cat-btn" data-filter="account">Account</button>
+      </div>
+
+      <!-- 01 Getting Started -->
+      <div class="faq-group" data-cat="getting-started">
+        <div class="faq-group-label">
+          <span class="faq-group-num">01</span>
+          <span class="faq-group-title">Getting Started</span>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">What is ApplyReady and who is it for?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>ApplyReady is a Chrome extension built specifically for <strong>international students</strong> on F-1, OPT, STEM OPT, CPT, or H-1B visas. It reads any job listing in seconds, flags visa conflicts, sponsorship walls, and location mismatches, then drafts your outreach — so you stop wasting time on roles you can't take.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">Is ApplyReady free?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>Yes — <strong>completely free</strong> during beta. You get 25 job analyses per day at no cost. No credit card, no subscription, no paywall.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">Do I need to create an account?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>No account is required to install and use the extension. You only need to provide your email if you want daily rate limit tracking and outreach generation. Authentication uses a <strong>magic link</strong> — no password needed.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">How do I get started?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p><strong>1.</strong> Install from the Chrome Web Store — one click, shows up instantly.</p>
+            <p><strong>2.</strong> Open the extension panel and paste your resume text into Settings.</p>
+            <p><strong>3.</strong> Set your visa status and location once.</p>
+            <p><strong>4.</strong> Open any job listing and click Analyze. Done.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">Which browsers does ApplyReady support?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p><strong>Google Chrome only</strong> for now. Firefox, Edge, and Safari support are on the roadmap but not yet available.</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="faq-divider" data-between="getting-started,visa" />
+
+      <!-- 02 Visa -->
+      <div class="faq-group" data-cat="visa">
+        <div class="faq-group-label">
+          <span class="faq-group-num">02</span>
+          <span class="faq-group-title">Visa &amp; Eligibility</span>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">Which visa statuses does ApplyReady support?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>Set your status once in Settings — every analysis is personalized to your authorization level.</p>
+            <div class="faq-tags">
+              <span class="faq-tag">F-1</span>
+              <span class="faq-tag">OPT</span>
+              <span class="faq-tag">STEM OPT</span>
+              <span class="faq-tag">CPT</span>
+              <span class="faq-tag">Needs H-1B</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">How does ApplyReady detect sponsorship walls?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>The extension reads the full listing and looks for language patterns indicating restrictions — phrases like <code>"must be authorized to work"</code>, <code>"no sponsorship"</code>, <code>"US citizens only"</code>, security clearance requirements, and similar signals. It cross-references these against your visa status.</p>
+            <p>It catches the vast majority of cases visible in the listing itself, though some companies bury restrictions deeper in the application portal.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">What does APPLY / SKIP / MAYBE mean?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p><strong>APPLY</strong> — strong match. Your visa status is compatible, skills align, no major red flags found.</p>
+            <p><strong>SKIP</strong> — clear disqualifier. The role explicitly excludes your visa type, requires clearance, or has a hard experience mismatch.</p>
+            <p><strong>MAYBE</strong> — worth a closer look. Sponsorship isn't confirmed but not denied, or there's an ambiguous requirement worth clarifying first.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">Can it detect location mismatches?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>Yes. Set your city once in Settings. ApplyReady flags roles that are <strong>onsite-only in a different city</strong> — so "hybrid" in San Francisco doesn't slip past you when you're in Ohio and can't relocate.</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="faq-divider" data-between="visa,features" />
+
+      <!-- 03 Features -->
+      <div class="faq-group" data-cat="features">
+        <div class="faq-group-label">
+          <span class="faq-group-num">03</span>
+          <span class="faq-group-title">Features &amp; How it Works</span>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">Which job boards does ApplyReady work on?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>Every job board — there's no supported-sites list. LinkedIn, Indeed, Handshake, Glassdoor, Wellfound, company career pages, university portals. If there's text describing a job, ApplyReady can read it. Selection Mode lets you highlight any text on any page to trigger an analysis manually.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">What is Selection Mode?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>Highlight any text on any page — a floating button appears. Tap it to analyze the selected text as a job listing. Useful for PDFs, email forwards, or niche boards where auto-detection doesn't trigger.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">How many analyses can I do per day?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>During beta, the limit is <strong>25 analyses per day</strong>, resetting at midnight. If you need more, reach out — limits are being adjusted based on actual usage patterns.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">Does my resume need to be in a specific format?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>No. Just <strong>paste plain text</strong> into the Settings panel — copy from your PDF, Word doc, or LinkedIn profile. You only need to do this once; it saves locally in your browser across sessions.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">How fast is an analysis?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>Typically <strong>under 10 seconds</strong>. The extension reads the page, sends the relevant content to the AI, and returns a verdict with pros, red flags, skill gaps, and a drafted outreach message.</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="faq-divider" data-between="features,outreach" />
+
+      <!-- 04 Outreach -->
+      <div class="faq-group" data-cat="outreach">
+        <div class="faq-group-label">
+          <span class="faq-group-num">04</span>
+          <span class="faq-group-title">Outreach Generation</span>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">What outreach formats does ApplyReady generate?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p><strong>Cover Letter</strong> — 3 tight paragraphs, no filler, professional tone.</p>
+            <p><strong>Email</strong> — direct recruiter outreach with contact info.</p>
+            <p><strong>LinkedIn Note</strong> — 2–3 sentences, connection request style.</p>
+            <p><strong>Handshake Message</strong> — concise, no unnecessary headers or address blocks.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">Can I personalize outreach with the recruiter's name?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>Yes. Add the recruiter's name before generating and the message uses their <strong>first name naturally</strong> — not "Dear Hiring Manager." Leave it blank and it defaults to a neutral professional opener.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">Does it include filler like "I hope this email finds you well"?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>Never. ApplyReady generates <strong>direct, specific, confident prose</strong> that sounds like a real person wrote it. No empty openers, no hedging, no generic platitudes.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">Is the outreach based on my actual resume?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>Yes. Outreach is generated using both the job listing and your resume — it references your actual skills and experience, not a generic template.</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="faq-divider" data-between="outreach,privacy" />
+
+      <!-- 05 Privacy -->
+      <div class="faq-group" data-cat="privacy">
+        <div class="faq-group-label">
+          <span class="faq-group-num">05</span>
+          <span class="faq-group-title">Privacy &amp; Data</span>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">Where is my resume stored?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>Your resume is stored <strong>locally in your browser</strong> using Chrome's <code>chrome.storage</code> API. It never leaves your device except when you trigger an analysis — sent over HTTPS and discarded immediately after. Never stored on our servers.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">Do you sell or share my data?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p><strong>No.</strong> ApplyReady does not sell data, does not share it with advertisers, and contains zero ad trackers or third-party analytics. The only external services used are Supabase (authentication) and the Anthropic Claude API (analysis) — neither is used for advertising.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">Do you track my browsing history?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>No. ApplyReady does not have access to your browsing history and does not track which pages you visit. It only reads the active page's content when you explicitly click <strong>Analyze</strong>.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">What data is logged on your servers?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>We log your <strong>email address</strong> (for authentication) and <strong>usage records</strong> — timestamps of when an analysis was requested, for rate limiting only. We do not log job listing content, your resume, outreach messages, or analysis results.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">How do I delete my account and data?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>Email <a href="mailto:sharmasundararj@gmail.com">sharmasundararj@gmail.com</a> and we'll delete your account and all associated data within 48 hours. Full details in the <a href="privacy.html">Privacy Policy</a>.</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="faq-divider" data-between="privacy,account" />
+
+      <!-- 06 Account -->
+      <div class="faq-group" data-cat="account">
+        <div class="faq-group-label">
+          <span class="faq-group-num">06</span>
+          <span class="faq-group-title">Account &amp; Access</span>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">How does login work without a password?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>We use <strong>magic links</strong>. Enter your email, receive a one-time link, click it — you're in. No password to remember or get phished. Sessions use short-lived JWT tokens with automatic refresh rotation.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">Will you send me marketing emails?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p><strong>No.</strong> Your email is used only to send magic links and notify you of material changes to the privacy policy. No newsletters, no promotions, no marketing without your explicit opt-in.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">Does my resume sync across devices?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>Not yet. Your resume and preferences are stored locally in each browser. If you use ApplyReady on a different computer, paste your resume again in Settings. Cross-device sync is planned for a future release.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q">
+            <span class="faq-q-text">Who built ApplyReady?</span>
+            <svg class="faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="faq-a">
+            <p>ApplyReady was built by a student at <strong>Youngstown State University</strong> — someone who has experienced exactly the frustrations this tool solves. It's a small, independent project. Questions go directly to the builder at <a href="mailto:sharmasundararj@gmail.com">sharmasundararj@gmail.com</a>.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: SIDEBAR -->
+    <div class="sidebar-col reveal delay-2">
+
+      <!-- Contact -->
+      <div class="sidebar-card">
+        <div class="sidebar-card-head">Contact</div>
+        <div class="sidebar-card-body">
+          <a href="mailto:sharmasundararj@gmail.com" class="contact-email">
+            <div class="contact-email-icon">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-email-label">Email support</div>
+              <div class="contact-email-addr">sharmasundararj@gmail.com</div>
+            </div>
+          </a>
+          <p class="contact-note">We read every message and respond within 24 hours.</p>
+        </div>
+      </div>
+
+      <!-- Browse by section -->
+      <div class="sidebar-card">
+        <div class="sidebar-card-head">Browse sections</div>
+        <div class="sidebar-card-body" style="padding: 12px;">
+          <div class="sidebar-nav">
+            <div class="sidebar-nav-item active" data-jump="getting-started">Getting Started <span class="sidebar-nav-num">01</span></div>
+            <div class="sidebar-nav-item" data-jump="visa">Visa &amp; Eligibility <span class="sidebar-nav-num">02</span></div>
+            <div class="sidebar-nav-item" data-jump="features">Features <span class="sidebar-nav-num">03</span></div>
+            <div class="sidebar-nav-item" data-jump="outreach">Outreach <span class="sidebar-nav-num">04</span></div>
+            <div class="sidebar-nav-item" data-jump="privacy">Privacy &amp; Data <span class="sidebar-nav-num">05</span></div>
+            <div class="sidebar-nav-item" data-jump="account">Account <span class="sidebar-nav-num">06</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- About -->
+      <div class="sidebar-card">
+        <div class="sidebar-card-head">About</div>
+        <div class="sidebar-card-body">
+          <div class="about-row">
+            <span class="about-key">Type</span>
+            <span class="about-val">Chrome Extension</span>
+          </div>
+          <div class="about-row">
+            <span class="about-key">Account required</span>
+            <span class="about-val green">None</span>
+          </div>
+          <div class="about-row">
+            <span class="about-key">Data stored</span>
+            <span class="about-val green">Local only</span>
+          </div>
+          <div class="about-row">
+            <span class="about-key">AI-powered</span>
+            <span class="about-val green">Yes</span>
+          </div>
+          <div class="about-row">
+            <span class="about-key">Cost</span>
+            <span class="about-val green">Free</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M2.06935 5.25839C2 5.62595 2 6.06722 2 6.94975V14C2 17.7712 2 19.6569 3.17157 20.8284C4.34315 22 6.22876 22 10 22H14C17.7712 22 19.6569 22 20.8284 20.8284C22 19.6569 22 17.7712 22 14V11.7979C22 9.16554 22 7.84935 21.2305 6.99383C21.1598 6.91514 21.0849 6.84024 21.0062 6.76946C20.1506 6 18.8345 6 16.2021 6H15.8284C14.6747 6 14.0979 6 13.5604 5.84678C13.2651 5.7626 12.9804 5.64471 12.7121 5.49543C12.2237 5.22367 11.8158 4.81578 11 4L10.4497 3.44975C10.1763 3.17633 10.0396 3.03961 9.89594 2.92051C9.27652 2.40704 8.51665 2.09229 7.71557 2.01738C7.52976 2 7.33642 2 6.94975 2C6.06722 2 5.62595 2 5.25839 2.06935C3.64031 2.37464 2.37464 3.64031 2.06935 5.25839ZM12.9524 11.1989L12.8541 11.0225C12.4741 10.3408 12.2841 10 12 10C11.7159 10 11.5259 10.3408 11.1459 11.0225L11.0476 11.1989C10.9397 11.3926 10.8857 11.4894 10.8015 11.5533C10.7173 11.6172 10.6125 11.641 10.4028 11.6884L10.2119 11.7316C9.47396 11.8986 9.10501 11.982 9.01723 12.2643C8.92945 12.5466 9.18097 12.8407 9.68403 13.429L9.81418 13.5812C9.95713 13.7483 10.0286 13.8319 10.0608 13.9353C10.0929 14.0387 10.0821 14.1502 10.0605 14.3733L10.0408 14.5763C9.96476 15.3612 9.92674 15.7536 10.1565 15.9281C10.3864 16.1025 10.7318 15.9435 11.4227 15.6254L11.6014 15.5431C11.7978 15.4527 11.8959 15.4075 12 15.4075C12.1041 15.4075 12.2022 15.4527 12.3986 15.5431L12.5773 15.6254C13.2682 15.9435 13.6136 16.1025 13.8435 15.9281C14.0733 15.7536 14.0352 15.3612 13.9592 14.5763L13.9395 14.3733C13.9179 14.1502 13.9071 14.0387 13.9392 13.9353C13.9714 13.8319 14.0429 13.7483 14.1858 13.5812L14.316 13.429C14.819 12.8407 15.0706 12.5466 14.9828 12.2643C14.895 11.982 14.526 11.8986 13.7881 11.7316L13.5972 11.6884C13.3875 11.641 13.2827 11.6172 13.1985 11.5533C13.1143 11.4894 10.0603 11.3926 12.9524 11.1989Z" fill="#06923E"/>
+        </svg>
+        Apply<span>Ready</span>
+      </a>
+      <div class="footer-links">
+       <a href="./privacy.html">privacy Policy</a>
+        <a href="./faq.html">Faq's</a>
+        <a href="./support.html">Support</a>
+        <a href="./test.html?later-install-page">Install</a>
+    </div>
+  </footer>
+
+  <script>
+    // Accordion
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    // Category filter
+    document.querySelectorAll('.faq-cat-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.faq-cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.faq-group[data-cat]').forEach(group => {
+          group.classList.toggle('hidden', filter !== 'all' && group.dataset.cat !== filter);
+        });
+        document.querySelectorAll('.faq-divider[data-between]').forEach(hr => {
+          if (filter === 'all') { hr.classList.remove('hidden'); return; }
+          const [a, b] = hr.dataset.between.split(',');
+          hr.classList.toggle('hidden', a !== filter && b !== filter);
+        });
+      });
+    });
+
+    // Sidebar section jump
+    document.querySelectorAll('.sidebar-nav-item').forEach(item => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('.sidebar-nav-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        const cat = item.dataset.jump;
+        // reset filter to all
+        document.querySelectorAll('.faq-cat-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector('.faq-cat-btn[data-filter="all"]').classList.add('active');
+        document.querySelectorAll('.faq-group[data-cat]').forEach(g => g.classList.remove('hidden'));
+        document.querySelectorAll('.faq-divider[data-between]').forEach(hr => hr.classList.remove('hidden'));
+        // scroll to group
+        const group = document.querySelector(`.faq-group[data-cat="${cat}"]`);
+        if (group) group.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Reveal on scroll
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Navbar scroll shadow
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
+    });
+  </script>
+</body>
+</html>
